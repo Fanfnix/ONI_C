@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -I./$(SRCDIR)
 LDFLAGS=-lm -lncurses
 
 BINDIR=bin
@@ -20,7 +20,7 @@ $(BINDIR)/$(APPNAME): $(OBJ) | $(BINDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(BINDIR) $(OBJDIR):
 	mkdir -p $@

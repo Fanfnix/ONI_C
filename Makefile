@@ -8,20 +8,22 @@ OBJDIR=obj
 
 APPNAME=oni
 
-SRC=$(shell find $(SRCDIR) -name *.c)
+SRC=$(shell find $(SRCDIR) -name '*.c')
 OBJ=$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-all: $(APPNAME)
+.PHONY: all clean mrpropre
+
+all: $(BINDIR)/$(APPNAME)
 
 $(BINDIR)/$(APPNAME): $(OBJ) | $(BINDIR)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-        mkdir -p $@
-        $(CC) $(CFLAGS) -c -o $@ $<
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c -o $@ $
 
 $(BINDIR) $(OBJDIR):
-    mkdir $@
+	mkdir -p $@
 
 clean:
 	rm -rf $(OBJDIR)/*.o

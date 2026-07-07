@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -I./$(SRCDIR)
+CFLAGS=-Wall -Iinclude/
 LDFLAGS=-lm -lncurses
 
 BINDIR=bin

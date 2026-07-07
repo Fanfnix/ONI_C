@@ -6,4 +6,7 @@
 #include <string.h>
 #include <ncurses.h>
 
+#include <struct.h>
+#include <element.h>
+
 #endif

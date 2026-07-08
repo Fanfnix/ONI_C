@@ -1,41 +1,37 @@
 CC=gcc
-CFLAGS=-Wall -Iinclude/ -Idata/cJson/
+CFLAGS=-Wall -Wextra -g -Iinclude/ -Idata/cJson
 LDFLAGS=-lm -lncurses
 
-BINDIR=bin
 SRCDIR=src
+CJSONDIR=data/cJson
 OBJDIR=obj
 
-LIBDIR=data/cJson
+APPNAME=oni
 
-APPNAME=oni.out
-
-SRC=$(shell find $(SRCDIR) -name '*.c')
-OBJ=$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-
-LIBSRC=$(LIBDIR)/cJSON.c
-LIBOBJ=$(LIBSRC:$(LIBDIR)/%.c=$(OBJDIR)/cjson/%.o)
+SRC=$(shell find $(SRCDIR) -name '*.c') $(CJSONDIR)/cJSON.c
+OBJ=$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(filter $(SRCDIR)/%.c,$(SRC))) \
+    $(patsubst $(CJSONDIR)/%.c,$(OBJDIR)/cjson/%.o,$(filter $(CJSONDIR)/%.c,$(SRC)))
 
 .PHONY: all clean mrpropre
 
-all: $(BINDIR)/$(APPNAME)
+all: $(APPNAME)
 
-$(BINDIR)/$(APPNAME): $(OBJ) $(LIBOBJ) | $(BINDIR)
+$(APPNAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/cjson/%.o: $(LIBDIR)/%.c | $(OBJDIR)
+$(OBJDIR)/cjson/%.o: $(CJSONDIR)/%.c | $(OBJDIR)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(BINDIR) $(OBJDIR):
+$(OBJDIR):
 	mkdir -p $@
 
 clean:
 	rm -rf $(OBJDIR)
 
 mrpropre: clean
-	rm -rf $(BINDIR) $(OBJDIR)
+	rm -f $(APPNAME)

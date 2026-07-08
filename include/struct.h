@@ -16,42 +16,45 @@ typedef struct Temperature {
 } Temperature;
 
 typedef struct ElementTemperatureStats {
-    Temperature *melting_point;
-    Temperature *gasification_point;
-    double heat_capacity;
-    double thermal_conductivity;
+    Temperature *solidificationPoint;
+    Temperature *liquefactionPoint;
+    Temperature *gasificationPoint;
+    char *solidificationTargetId;
+    char *liquefactionTargetId;
+    char *gasificationTargetId;
+    double heatCapacity;
+    double thermalConductivity;
 } ElementTemperatureStats;
 
 typedef struct ElementMassStats {
-    Mass *default_mass;
-    Mass *max_mass;
+    Mass *defaultMass;
+    Mass *maxMass;
 } ElementMassStats;
 
 typedef struct ElementStats {
-    ElementTemperatureStats *element_states_temperature;
-    ElementMassStats *element_mass_stats;
+    ElementTemperatureStats *temperatures;
+    ElementMassStats *masses;
     int hardness;
-    double light_absorption;
-    double decor_bonus;
+    double lightAbsorption;
+    double decorBonus;
 } ElementStats;
 
 typedef struct Element {
-    char *element_id;
-    char *element_type;
+    char *id;
+    char *type;
     ElementStats *stats;
     Property *properties[10];
 } Element;
 
 typedef struct Item {
-    Element *item_element;
-    Mass *item_mass;
-    Temperature *item_temp;
-    char **state;
+    Element *element;
+    Mass *mass;
+    Temperature *temp;
 } Item;
 
 typedef struct Tile {
     int id;
-    Item *tile_item;
+    Item *item;
 } Tile;
 
 #endif

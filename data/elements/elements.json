@@ -1,0 +1,40 @@
+[
+    {
+        "id": "SandStone",
+        "type": "Raw Mineral",
+        "hardness": 10,
+        "lightAbsorption": 1,
+        "decorBonus": 0.1,
+        "solidificationPointValue": null,
+        "liquefactionPointValue": 926.85,
+        "gasifiationPointValue": null,
+        "solidificationTargetId": null,
+        "liquefactionTargetId": "Magma",
+        "gasificationTargetId": null,
+        "heatCapacity": 0.8,
+        "thermalConductivity": 2.9,
+        "defaultMassValue": 1000,
+        "defaultMassUnit": "kg",
+        "maxMassValue": 1840,
+        "maxMassUnit": "kg"
+    },
+    {
+        "id": "Fossil",
+        "type": "Raw Mineral",
+        "hardness": 50,
+        "lightAbsorption": 1,
+        "decorBonus": 0.1,
+        "solidificationPointValue": null,
+        "liquefactionPointValue": 1338.85,
+        "gasifiationPointValue": null,
+        "solidificationTargetId": null,
+        "liquefactionTargetId": "Magma",
+        "gasificationTargetId": null,
+        "heatCapacity": 0.91,
+        "thermalConductivity": 2.0,
+        "defaultMassValue": 500,
+        "defaultMassUnit": "kg",
+        "maxMassValue": 1000,
+        "maxMassUnit": "kg"
+    }
+]

@@ -1,6 +1,10 @@
 #ifndef STRUCT
 #define STRUCT
 
+typedef struct Property {
+
+} Property;
+
 typedef struct Mass {
     double value;
     char *unit;

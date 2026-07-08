@@ -8,7 +8,7 @@ OBJDIR=obj
 
 LIBDIR=data/cJson
 
-APPNAME=oni
+APPNAME=oni.out
 
 SRC=$(shell find $(SRCDIR) -name '*.c')
 OBJ=$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
@@ -25,11 +25,11 @@ $(BINDIR)/$(APPNAME): $(OBJ) $(LIBOBJ) | $(BINDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR)/cjson/%.o: $(LIBDIR)/%.c | $(OBJDIR)
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(BINDIR) $(OBJDIR):
 	mkdir -p $@

@@ -5,7 +5,9 @@ int main(int argc, char **argv) {
 
     elements_init();
 
-    elements_show();
+    elements_show(true);
+
+    printf("%p\n", element_get_registry());
 
     elements_free();
 

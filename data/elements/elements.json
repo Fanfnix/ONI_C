@@ -13,10 +13,12 @@
         "gasificationTargetId": null,
         "heatCapacity": 0.84,
         "thermalConductivity": 0.62,
+        "overheatBonus": 200.0,
         "defaultMassValue": 1000,
         "defaultMassUnit": "kg",
         "maxMassValue": 2000,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid", "Plumbable", "Crushable", "General Buildable", "Insulator"]
     },
     {
         "id": "Fossil",
@@ -32,10 +34,12 @@
         "gasificationTargetId": null,
         "heatCapacity": 0.91,
         "thermalConductivity": 2.0,
+        "overheatBonus": 0.0,
         "defaultMassValue": 500,
         "defaultMassUnit": "kg",
         "maxMassValue": 1000,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid"]
     },
     {
         "id": "Granite",
@@ -51,10 +55,12 @@
         "gasificationTargetId": null,
         "heatCapacity": 0.79,
         "thermalConductivity": 3.39,
+        "overheatBonus": 15.0,
         "defaultMassValue": 1840,
         "defaultMassUnit": "kg",
         "maxMassValue": 1840,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid", "Plumbable", "Crushable", "General Buildable", "Precious Rock"]
     },
     {
         "id": "IgneousRock",
@@ -70,10 +76,12 @@
         "gasificationTargetId": null,
         "heatCapacity": 1.0,
         "thermalConductivity": 2.0,
+        "overheatBonus": 15.0,
         "defaultMassValue": 1840,
         "defaultMassUnit": "kg",
         "maxMassValue": 1840,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid", "Plumbable", "Crushable", "General Buildable"]
     },
     {
         "id": "MaficRock",
@@ -89,10 +97,12 @@
         "gasificationTargetId": null,
         "heatCapacity": 0.2,
         "thermalConductivity": 1.0,
+        "overheatBonus": 0.0,
         "defaultMassValue": 1840,
         "defaultMassUnit": "kg",
         "maxMassValue": 1840,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid", "General Buildable"]
     },
     {
         "id": "Obsidian",
@@ -108,10 +118,12 @@
         "gasificationTargetId": null,
         "heatCapacity": 0.2,
         "thermalConductivity": 2.0,
+        "overheatBonus": 15.0,
         "defaultMassValue": 1000,
         "defaultMassUnit": "kg",
         "maxMassValue": 1840,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid", "Plumbable", "Crushable", "General Buildable", "Precious Rock"]
     },
     {
         "id": "SandStone",
@@ -127,10 +139,12 @@
         "gasificationTargetId": null,
         "heatCapacity": 0.8,
         "thermalConductivity": 2.9,
+        "overheatBonus": 0.0,
         "defaultMassValue": 1000,
         "defaultMassUnit": "kg",
         "maxMassValue": 1840,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid", "Plumbable", "Crushable", "General Buildable"]
     },
     {
         "id": "SedimentaryRock",
@@ -146,9 +160,11 @@
         "gasificationTargetId": null,
         "heatCapacity": 0.2,
         "thermalConductivity": 2.0,
+        "overheatBonus": 0.0,
         "defaultMassValue": 1840,
         "defaultMassUnit": "kg",
         "maxMassValue": 1840,
-        "maxMassUnit": "kg"
+        "maxMassUnit": "kg",
+        "properties": ["Solid", "Plumbable", "Crushable", "General Buildable"]
     }
 ]

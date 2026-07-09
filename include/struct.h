@@ -1,10 +1,6 @@
 #ifndef STRUCT
 #define STRUCT
 
-typedef struct Property {
-
-} Property;
-
 typedef struct Mass {
     double value;
     char *unit;
@@ -24,6 +20,7 @@ typedef struct ElementTemperatureStats {
     char *gasificationTargetId;
     double heatCapacity;
     double thermalConductivity;
+    double overheatBonus;
 } ElementTemperatureStats;
 
 typedef struct ElementMassStats {
@@ -43,7 +40,7 @@ typedef struct Element {
     char *id;
     char *type;
     ElementStats *stats;
-    Property *properties[10];
+    char *properties[10];
 } Element;
 
 typedef struct Item {

@@ -8,10 +8,17 @@ int main(void) {
 
     elements_init();
 
+    Map *map = create_map();
+    map_init(map);
+
     printf("--------------------------------------------------------------------------------\n");
 
     elements_show(true);
     printf("%p\n", element_get_registry());
+
+    printf("MAP_PTR : %p / SIZE : %ld\n", map, sizeof(*map));
+
+    map_show(map);
 
     printf("--------------------------------------------------------------------------------\n");
 

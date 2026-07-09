@@ -16,5 +16,6 @@
 
 #include "element.h"
 #include "item.h"
+#include "tile.h"
 
 #endif

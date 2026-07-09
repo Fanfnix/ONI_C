@@ -1,16 +1,20 @@
 #include "header.h"
 
-int main(int argc, char **argv) {
-    printf("--------------------------------------------------------------------------------\n");
+int main(void) {
+
+    properties_display_init();
+    mass_display_init();
+    temperature_display_init();
 
     elements_init();
 
-    elements_show(true);
+    printf("--------------------------------------------------------------------------------\n");
 
+    elements_show(true);
     printf("%p\n", element_get_registry());
 
-    elements_free();
-
     printf("--------------------------------------------------------------------------------\n");
+
+    elements_free();
     return 0;
 }

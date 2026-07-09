@@ -1,8 +1,17 @@
 #ifndef ITEM
 #define ITEM
 
+typedef struct Element Element;
+typedef struct Mass Mass;
 typedef struct Temperature Temperature;
 
-Item* make_new_item(const char *element_id, const Temperature *temperature);
+typedef struct Item {
+    const Element *element;
+    Mass *mass;
+    Temperature *temperature;
+} Item;
+
+Item* create_item_from_element(Element* element, Mass *mass, Temperature *temperature);
+Item* create_item_from_id(const char *element_id, Mass *mass, Temperature *temperature);
 
 #endif

@@ -14,7 +14,6 @@
 #include "temperature.h"
 #include "property.h"
 
-#include "struct.h"
 #include "element.h"
 #include "item.h"
 

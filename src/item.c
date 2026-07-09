@@ -1,24 +1,18 @@
 #include <header.h>
 
-/*
 
-static Item* create_item(Element* element, const double delta_mass, const double temperature);
-
-static Item* create_item(Element* element, const double delta_mass, const double temperature) {
+Item* create_item_from_element(Element* element, Mass *mass, Temperature *temperature) {
     Item *item = (Item*)malloc(sizeof(Item));
-
     item->element = element;
-
-    (double)rand()/(RAND_MAX)*(max-min)+min;
+    item->mass = mass;
+    item->temperature = temperature;
+    return item;
 }
 
-Item* make_new_item(const char *element_id, const Temperature *temperature) {
-
-    const Element *element = element_get_by_id(element_id);
-
-
-
-    double delta_mass = (double)rand()/(RAND_MAX)*(max-min)+min;
+Item* create_item_from_id(const char *element_id, Mass *mass, Temperature *temperature) {
+    Item *item = (Item*)malloc(sizeof(Item));
+    item->element = element_get_by_id(element_id);
+    item->mass = mass;
+    item->temperature = temperature;
+    return item;
 }
-
-*/

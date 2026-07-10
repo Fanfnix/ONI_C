@@ -2,6 +2,22 @@
 
 int main(void) {
 
+    int statut = EXIT_FAILURE;
+
+    /*=== INIT SDL & GAME_WINDOW ===*/
+    GameWindow *game_window = NULL;
+
+    int sdlerr = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS);
+    if (sdlerr < 0) {
+        fprintf(stderr, "ERROR : SDL_Init : %s", SDL_GetError());
+        goto Quit;
+    }
+
+    game_window = create_game_window();
+    if (game_window == NULL) goto Quit;
+
+    /*=== INIT GAME ===*/
+
     properties_display_init();
     mass_display_init();
     temperature_display_init();
@@ -11,17 +27,39 @@ int main(void) {
     Map *map = create_map();
     map_init(map);
 
+    SDL_Rect rect = {100, 100, 10, 10};
+    SDL_Color blanc = {255, 255, 255, 255};
+    SDL_Color noir = {0, 0, 0, 255};
+
+    SDL_bool running = SDL_TRUE;
+
+    /*=== GAME MAIN LOOP ===*/
+
     printf("--------------------------------------------------------------------------------\n");
 
-    elements_show(true);
-    printf("%p\n", element_get_registry());
+    while(running) {
 
-    printf("MAP_PTR : %p / SIZE : %ld\n", map, sizeof(*map));
+        handle_events(game_window, &running);
+        SDL_Delay(20);
+        
+        SDL_SetRenderDrawColor(game_window->renderer, blanc.r, blanc.g, blanc.b, blanc.a);
+        SDL_RenderClear(game_window->renderer);
 
-    map_show(map);
+        SDL_SetRenderDrawColor(game_window->renderer, noir.r, noir.g, noir.b, noir.a);
+        SDL_RenderFillRect(game_window->renderer, &rect);
+
+        SDL_RenderPresent(game_window->renderer);
+
+    }
 
     printf("--------------------------------------------------------------------------------\n");
+
+    /*=== GAME CLOSING ===*/
 
     elements_free();
-    return 0;
+Quit:
+    if (game_window->renderer != NULL) SDL_DestroyRenderer(game_window->renderer);
+    if (game_window->window != NULL) SDL_DestroyWindow(game_window->window);
+    SDL_Quit();
+    return statut;
 }

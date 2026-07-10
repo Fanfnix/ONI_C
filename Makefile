@@ -1,6 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -g -Iinclude/ -Idata/cJson
-LDFLAGS=-lm -lncurses
+SDLFLAGS=$(shell pkg-config --cflags --libs sdl2)
+LDFLAGS=-lm -lncurses $(SDLFLAGS)
 
 SRCDIR=src
 CJSONDIR=data/cJson

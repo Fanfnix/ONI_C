@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <SDL2/SDL.h>
 
 #include "cJSON.h"
 
@@ -18,5 +19,8 @@
 #include "item.h"
 #include "tile.h"
 #include "map.h"
+
+#include "gameWindow.h"
+#include "events.h"
 
 #endif

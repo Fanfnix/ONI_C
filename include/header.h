@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 #include <string.h>
 #include <SDL2/SDL.h>
 
@@ -20,7 +21,7 @@
 #include "tile.h"
 #include "map.h"
 
-#include "consoleDisplay.h"
+#include "elementColor.h"
 #include "gameWindow.h"
 #include "events.h"
 

@@ -19,6 +19,7 @@ typedef struct GameWindow {
     SDL_Window *window;
     SDL_Renderer *renderer;
     int pending_restore;
+    int cameraX, cameraY;
 } GameWindow;
 
 GameWindow *create_game_window();

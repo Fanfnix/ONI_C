@@ -18,6 +18,8 @@ int main(void) {
 
     /*=== INIT GAME ===*/
 
+    srand(time(NULL));
+
     properties_display_init();
     mass_display_init();
     temperature_display_init();
@@ -27,9 +29,7 @@ int main(void) {
     Map *map = create_map();
     map_init(map);
 
-    SDL_Rect rect = {100, 100, 10, 10};
     SDL_Color blanc = {255, 255, 255, 255};
-    SDL_Color noir = {0, 0, 0, 255};
 
     SDL_bool running = SDL_TRUE;
 
@@ -37,18 +37,16 @@ int main(void) {
 
     printf("--------------------------------------------------------------------------------\n");
 
-    map_show(map);
-
     while(running) {
 
         handle_events(game_window, &running);
+        handle_camera_movement(game_window);
         SDL_Delay(20);
         
         SDL_SetRenderDrawColor(game_window->renderer, blanc.r, blanc.g, blanc.b, blanc.a);
         SDL_RenderClear(game_window->renderer);
 
-        SDL_SetRenderDrawColor(game_window->renderer, noir.r, noir.g, noir.b, noir.a);
-        SDL_RenderFillRect(game_window->renderer, &rect);
+        map_render(map, game_window->renderer, game_window->cameraX, game_window->cameraY);
 
         SDL_RenderPresent(game_window->renderer);
 

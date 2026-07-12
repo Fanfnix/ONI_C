@@ -41,6 +41,8 @@ GameWindow *create_game_window() {
     game_window->window = window;
     game_window->renderer = renderer;
     game_window->pending_restore = 0;
+    game_window->cameraX = 0;
+    game_window->cameraY = 0;
 
     return game_window;
 }

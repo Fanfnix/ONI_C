@@ -74,3 +74,26 @@ void handle_events(GameWindow *game_window, SDL_bool *running) {
         }
     }
 }
+
+
+void handle_camera_movement(GameWindow *game_window) {
+    const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+
+    int map_width_px = MAP_WIDTH * TILE_SIZE;
+    int map_height_px = MAP_HEIGHT * TILE_SIZE;
+
+    int max_camera_x = (map_width_px > GAME_WIDTH) ? (map_width_px - GAME_WIDTH) : 0;
+    int max_camera_y = (map_height_px > GAME_HEIGHT) ? (map_height_px - GAME_HEIGHT) : 0;
+
+    if (keystate[SDL_SCANCODE_W]) game_window->cameraY -= CAMERA_SPEED;
+    if (keystate[SDL_SCANCODE_S]) game_window->cameraY += CAMERA_SPEED;
+    if (keystate[SDL_SCANCODE_A]) game_window->cameraX -= CAMERA_SPEED;
+    if (keystate[SDL_SCANCODE_D]) game_window->cameraX += CAMERA_SPEED;
+
+    if (game_window->cameraX < 0) game_window->cameraX = 0;
+    if (game_window->cameraY < 0) game_window->cameraY = 0;
+    if (game_window->cameraX > max_camera_x) game_window->cameraX = max_camera_x;
+    if (game_window->cameraY > max_camera_y) game_window->cameraY = max_camera_y;
+
+    // printf("camera=(%d,%d) max=(%d,%d)\n", game_window->cameraX, game_window->cameraY, max_camera_x, max_camera_y);
+}

@@ -1,8 +1,8 @@
 #ifndef MAP
 #define MAP
 
-#define MAP_WIDTH 200   // 256
-#define MAP_HEIGHT 300  // 385
+#define MAP_WIDTH 100   // 256
+#define MAP_HEIGHT 150  // 385
 
 typedef struct Tile Tile;
 

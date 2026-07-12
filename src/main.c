@@ -37,6 +37,8 @@ int main(void) {
 
     printf("--------------------------------------------------------------------------------\n");
 
+    map_show(map);
+
     while(running) {
 
         handle_events(game_window, &running);

@@ -27,7 +27,7 @@ static void toggle_fullscreen(GameWindow *game_window) {
     if (!game_window->fullscreen) {
         SDL_GetWindowPosition(game_window->window, &game_window->posX, &game_window->posY);
         SDL_GetWindowSize(game_window->window, &game_window->width, &game_window->height);
-        printf("Going Fullscreen : X=%d / Y=%d\n", game_window->posX, game_window->posY);
+        printf("Going Fullscreen.");
         SDL_SetWindowFullscreen(game_window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
         game_window->fullscreen = 1;
     } else {
@@ -45,7 +45,7 @@ static void handle_windowevent(SDL_Event *event, GameWindow *game_window) {
             SDL_SetWindowSize(game_window->window, game_window->width, game_window->height);
             SDL_SetWindowPosition(game_window->window, game_window->posX, game_window->posY);
             game_window->pending_restore = 0;
-            printf("Leaving Fullscreen : X=%d / Y=%d\n", game_window->posX, game_window->posY);
+            printf("Leaving Fullscreen.");
         }
     }
 }

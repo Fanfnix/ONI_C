@@ -20,6 +20,7 @@
 #include "tile.h"
 #include "map.h"
 
+#include "consoleDisplay.h"
 #include "gameWindow.h"
 #include "events.h"
 

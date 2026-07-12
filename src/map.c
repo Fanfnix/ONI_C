@@ -22,8 +22,9 @@ void map_init(Map *map) {
 void map_show(Map *map) {
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
-            printf("%d", strcmp(map->grid[y][x]->item->element->id, "SandStone"));
+            char c = element_ascii_char(map->grid[y][x]->item->element->id);
+            printf("%c", c);
         }
-        printf(".\n");
+        printf("\n");
     }
 }

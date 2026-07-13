@@ -3,40 +3,85 @@
 
 typedef struct Mass Mass;
 typedef struct Temperature Temperature;
+typedef struct ElementTag ElementTag;
 
-// #include "cJSON.h"
 
-typedef struct ElementTemperatureStats {
-    Temperature *solidificationPoint;
-    Temperature *liquefactionPoint;
-    Temperature *gasificationPoint;
-    char *solidificationTargetId;
-    char *liquefactionTargetId;
-    char *gasificationTargetId;
-    double heatCapacity;
-    double thermalConductivity;
-    double overheatBonus;  // TODO : Transformer le double en Temperature*
-} ElementTemperatureStats;
+typedef enum {
+    SOLID,
+    LIQUID,
+    GAS
+} ElementState;
 
-typedef struct ElementMassStats {
-    Mass *defaultMass;
-    Mass *maxMass;
-} ElementMassStats;
 
-typedef struct ElementStats {
-    ElementTemperatureStats *temperatures;
-    ElementMassStats *masses;
-    int hardness;
-    double lightAbsorption;
-    double decorBonus;
-} ElementStats;
+typedef struct {
+    char *elementId;
 
-typedef struct Element {
-    char *id;
-    char *type;
-    ElementStats *stats;
-    unsigned int properties[BITSET_SIZE];
+    ElementState state;
+
+    float specificHeatCapacity;
+    float thermalConductivity;
+
+    float solidSurfaceAreaMultiplier;
+    float liquidSurfaceAreaMultiplier;
+    float gasSurfaceAreaMultiplier;
+
+    Temperature defaultTemperature;
+    Mass defaultMass;
+    Mass defaultPressure;
+    Mass maxMass;
+
+    Temperature lowTemp;
+    Temperature highTemp;
+
+    char *lowTempTransitionTarget;
+    char *highTempTransitionTarget;
+
+    char *lowTempTransitionOreId;
+    Mass lowTempTransitionOreMassConversion;
+
+    char *highTempTransitionOreId;
+    Mass highTempTransitionOreMassConversion;
+
+    float molarMass;
+    float toxicity;
+
+    float lightAbsorptionFactor;
+    float radiationAbsorptionFactor;
+    float radiationPer1000Mass;
+
+    /* Gaz */
+    float flow;
+
+    /* Liquides */
+    float liquidCompression;
+    float speed;
+    float minHorizontalFlow;
+    float minVerticalFlow;
+
+    /* Solides */
+    float strength;
+    float hardness;
+    int buildMenuSort;
+    char *refinedMetalTarget;
+
+    /* Sublimation */
+    char *sublimateId;
+    char *sublimateFx;
+    float sublimateEfficiency;
+    float sublimateProbability;
+    float offGasPercentage;
+
+    char *materialCategory;
+
+    ElementTag **tags;
+    int tagCount;
+
+    bool isDisabled;
+
+    char *localizationID;
+    char *dlcId;
 } Element;
+
 
 int elements_init(void);
 void elements_free(void);

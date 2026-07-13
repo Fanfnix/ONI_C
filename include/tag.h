@@ -4,14 +4,14 @@
 typedef struct Element Element;
 
 typedef enum {
-    PROP_NONE = 0,
-    PROP_SOLID,
-    PROP_PLUMBABLE,
-    PROP_CRUSHABLE,
-    PROP_GENERAL_BUILDABLE,
-    PROP_INSULATOR,
-    PROP_PRECIOUS_ROCK,
-    PROP_MAX_COUNT = 128 
+    TAG_NONE = 0,
+    TAG_SOLID,
+    TAG_PLUMBABLE,
+    TAG_CRUSHABLE,
+    TAG_GENERAL_BUILDABLE,
+    TAG_INSULATOR,
+    TAG_PRECIOUS_ROCK,
+    TAG_MAX_COUNT = 128 
 } ElementTag;
 
 typedef struct {

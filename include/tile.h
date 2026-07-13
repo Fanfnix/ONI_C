@@ -1,12 +1,12 @@
 #ifndef TILE
 #define TILE
 
-typedef struct Item Item;
-typedef struct Element Element;
-typedef struct Mass Mass;
-typedef struct Temperature Temperature;
+typedef struct Item;
+typedef struct Element;
+typedef struct Mass;
+typedef struct Temperature;
 
-typedef struct Tile {
+typedef struct {
     int id;
     const Item *item;
 } Tile;

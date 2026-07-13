@@ -1,23 +1,52 @@
 #ifndef ELEMENT
 #define ELEMENT
 
-typedef struct Mass Mass;
-typedef struct Temperature Temperature;
-typedef struct ElementTag ElementTag;
+typedef struct Mass;
+typedef struct Temperature;
+typedef struct ElementTag;
 
-
+/* === ENUM STATES === */
 typedef enum {
     SOLID,
     LIQUID,
     GAS
 } ElementState;
 
+/* === STATES PROPERTIES === */
+typedef struct {
+    Mass defaultPressure;
+    float flow;
+} GasProperties;
 
+typedef struct {
+    Mass maxMass;
+    float liquidCompression;
+    float speed;
+    float minHorizontalFlow;
+    float minVerticalFlow;
+} LiquidProperties;
+
+typedef struct {
+    float strength;
+    float hardness;
+    int buildMenuSort;
+    char *refinedMetalTarget;
+} SolidProperties;
+
+/* === UNION PROPERTIES === */
+typedef union {
+    GasProperties gas;
+    LiquidProperties liquid;
+    SolidProperties solid;
+} ElementProperties;
+
+/* === ELEMENT === */
 typedef struct {
     char *elementId;
 
     ElementState state;
 
+    /* Commun à tous les éléments */
     float specificHeatCapacity;
     float thermalConductivity;
 
@@ -27,8 +56,6 @@ typedef struct {
 
     Temperature defaultTemperature;
     Mass defaultMass;
-    Mass defaultPressure;
-    Mass maxMass;
 
     Temperature lowTemp;
     Temperature highTemp;
@@ -49,22 +76,10 @@ typedef struct {
     float radiationAbsorptionFactor;
     float radiationPer1000Mass;
 
-    /* Gaz */
-    float flow;
+    /* Propriétés dépendantes de l'état */
+    ElementProperties properties;
 
-    /* Liquides */
-    float liquidCompression;
-    float speed;
-    float minHorizontalFlow;
-    float minVerticalFlow;
-
-    /* Solides */
-    float strength;
-    float hardness;
-    int buildMenuSort;
-    char *refinedMetalTarget;
-
-    /* Sublimation */
+    /* Commun mais optionnel */
     char *sublimateId;
     char *sublimateFx;
     float sublimateEfficiency;
@@ -73,7 +88,7 @@ typedef struct {
 
     char *materialCategory;
 
-    ElementTag **tags;
+    ElementTag *tags;
     int tagCount;
 
     bool isDisabled;

@@ -7,7 +7,7 @@ typedef enum {
     TEMPERATURE_K
 } TemperatureUnit;
 
-typedef struct Temperature {
+typedef struct {
     double value;
     TemperatureUnit unit;
 } Temperature;

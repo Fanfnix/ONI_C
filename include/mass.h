@@ -7,7 +7,7 @@ typedef enum {
     MASS_MG
 } MassUnit;
 
-typedef struct Mass {
+typedef struct {
     double value;
     MassUnit unit;
 } Mass;

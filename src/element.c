@@ -230,11 +230,23 @@ void elements_free(void) {
 static ElementState parse_element_state(cJSON *obj, const char *key) {
     cJSON *item = cJSON_GetObjectItemCaseSensitive(obj, key);
     if (cJSON_IsString(item)) {
-        if (strcmp(item->valuestring, "SOLID") == 0) return SOLID;
-        if (strcmp(item->valuestring, "LIQUID") == 0) return LIQUID;
-        if (strcmp(item->valuestring, "GAS") == 0) return GAS;
+        if (strcmp(item->valuestring, "Solid") == 0) return SOLID;
+        if (strcmp(item->valuestring, "Liquid") == 0) return LIQUID;
+        if (strcmp(item->valuestring, "Gas") == 0) return GAS;
+        if (strcmp(item->valuestring, "Vacuum") == 0) return VACUUM;
     }
-    return SOLID;
+    return VACUUM;
+}
+
+
+const char* element_state_to_string(ElementState state) {
+    switch (state) {
+        case SOLID:  return "Solid";
+        case LIQUID: return "Liquid";
+        case GAS:    return "Gas";
+        case VACUUM: return "Vacuum";
+        default:     return "Unknown";
+    }
 }
 
 
@@ -274,7 +286,11 @@ static void print_element_compact(const Element *e) {
         printf("[Element] (NULL)\n");
         return;
     }
-    printf("[%s] State: %d | SHC: %.2f | Cond: %.2f\n", e->elementId ? e->elementId : "?", e->state, e->specificHeatCapacity, e->thermalConductivity);
+    printf("[%s] State: %s | SHC: %.2f | Cond: %.2f\n",
+            e->elementId ? e->elementId : "?",
+            element_state_to_string(e->state),
+            e->specificHeatCapacity,
+            e->thermalConductivity);
 }
 
 

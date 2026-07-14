@@ -5,7 +5,8 @@
 typedef enum {
     SOLID,
     LIQUID,
-    GAS
+    GAS,
+    VACUUM
 } ElementState;
 
 /* === STATES PROPERTIES === */
@@ -99,5 +100,7 @@ const Element* element_get_by_id(const char *id);
 
 const Element* const* element_get_registry(void);
 int element_get_count(void);
+
+const char* element_state_to_string(ElementState state);
 
 #endif

@@ -26,8 +26,8 @@ int main(void) {
 
     elements_init();
 
-    // Map *map = create_map();
-    // map_init(map);
+    Map *map = create_map();
+    map_init(map);
 
     SDL_Color blanc = {255, 255, 255, 255};
 
@@ -37,7 +37,7 @@ int main(void) {
 
     printf("--------------------------------------------------------------------------------\n");
 
-    elements_show();
+    // elements_show();
 
     while(running) {
 
@@ -48,7 +48,7 @@ int main(void) {
         SDL_SetRenderDrawColor(game_window->renderer, blanc.r, blanc.g, blanc.b, blanc.a);
         SDL_RenderClear(game_window->renderer);
 
-        // map_render(map, game_window->renderer, game_window->cameraX, game_window->cameraY);
+        map_render(map, game_window->renderer, game_window->cameraX, game_window->cameraY);
 
         SDL_RenderPresent(game_window->renderer);
 

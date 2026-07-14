@@ -7,8 +7,8 @@ typedef enum {
     TEMPERATURE_K
 } TemperatureUnit;
 
-typedef struct Temperature {
-    double value;
+typedef struct {
+    float value;
     TemperatureUnit unit;
 } Temperature;
 
@@ -19,7 +19,7 @@ typedef struct {
 
 void temperature_display_init(void);
 
-Temperature* temperature_create(const double value, const TemperatureUnit unit);
+Temperature* temperature_create(const float value, const TemperatureUnit unit);
 void temperature_convert_to(Temperature *t, const TemperatureUnit target_unit);
 
 TemperatureUnit temperature_unit_from_string(const char *str);

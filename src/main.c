@@ -20,7 +20,7 @@ int main(void) {
 
     srand(time(NULL));
 
-    properties_display_init();
+    tags_display_init();
     mass_display_init();
     temperature_display_init();
 
@@ -36,6 +36,8 @@ int main(void) {
     /*=== GAME MAIN LOOP ===*/
 
     printf("--------------------------------------------------------------------------------\n");
+
+    // elements_show();
 
     while(running) {
 

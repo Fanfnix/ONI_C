@@ -17,10 +17,18 @@ GameWindow *create_game_window() {
                               GAME_WINDOW_BASE_WIDTH, GAME_WINDOW_BASE_HEIGHT,
                               GAME_WINDOW_FLAGS);
 
-    if(window == NULL)
-    {
+    if(window == NULL) {
         fprintf(stderr, "ERROR : SDL_CreateWindow failed : %s", SDL_GetError());
         return NULL;
+    }
+
+    SDL_Surface* icon = SDL_LoadBMP("./data/img/logo.bmp");
+
+    if (icon != NULL) {
+        SDL_SetWindowIcon(window, icon);
+        SDL_FreeSurface(icon);
+    } else {
+        printf("Erreur de chargement de l'icône : %s\n", SDL_GetError());
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);

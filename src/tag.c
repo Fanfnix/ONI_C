@@ -1,0 +1,108 @@
+#include "header.h"
+
+
+static const TagMapping TAG_TABLE[] = {
+    {"Solid",                  TAG_SOLID},
+    {"Plumbable",              TAG_PLUMBABLE},
+    {"Crushable",              TAG_CRUSHABLE},
+    {"General Buildable",      TAG_GENERAL_BUILDABLE},
+    {"Insulator",              TAG_INSULATOR},
+    {"Precious Rock",          TAG_PRECIOUS_ROCK},
+    {"BuildableAny",           TAG_BUILDABLE_ANY},
+    {"Glasses",                TAG_GLASSES},
+    {"StartingRefinedMetal",   TAG_STARTING_REFINED_METAL},
+    {"Ore",                    TAG_ORE},
+    {"StartingMetalOre",       TAG_STARTING_METAL_ORE},
+    {"HideFromSpawnTool",      TAG_HIDE_FROM_SPAWN_TOOL},
+    {"HideFromCodex",          TAG_HIDE_FROM_CODEX},
+    {"FlyingCritterEdible",    TAG_FLYING_CRITTER_EDIBLE},
+    {"Slippery",               TAG_SLIPPERY},
+    {"IceOre",                 TAG_ICE_ORE},
+    {"Coal",                   TAG_COAL},
+    {"Unstable",               TAG_UNSTABLE},
+    {"RefinedMetal",           TAG_REFINED_METAL},
+    {"Mixture",                TAG_MIXTURE},
+    {"Oxidizer",               TAG_OXIDIZER},
+    {"Fossils",                TAG_FOSSILS},
+    {"PreciousRock",           TAG_PRECIOUS_ROCK},
+    {"BuildableRaw",           TAG_BUILDABLE_RAW},
+    {"Metal",                  TAG_METAL},
+    {"Antiseptic",             TAG_ANTISEPTIC},
+    {"Plastic",                TAG_PLASTIC},
+    {"Compostable",            TAG_COMPOSTABLE},
+    {"Noncrushable",           TAG_NONCRUSHABLE},
+    {"EmitsLight",             TAG_EMITS_LIGHT},
+    {"BuildingWood",           TAG_BUILDING_WOOD},
+    {"IndustrialIngredient",   TAG_INDUSTRIAL_INGREDIENT},
+    {"UseSmeltingByproducts",  TAG_USE_SMELTING_BYPRODUCTS},
+    {"AnyWater",               TAG_ANY_WATER},
+    {"LubricatingOil",         TAG_LUBRICATING_OIL},
+    {"UnrefinedOil",           TAG_UNREFINED_OIL},
+    {"CritterDrinkable",       TAG_CRITTER_DRINKABLE},
+    {"Oil",                    TAG_OIL},
+    {"CombustibleLiquid",      TAG_COMBUSTIBLE_LIQUID},
+    {"PlastifiableLiquid",     TAG_PLASTIFIABLE_LIQUID},
+    {"CombustibleGas",         TAG_COMBUSTIBLE_GAS},
+    {"Alloy",                  TAG_ALLOY},
+
+    {NULL, TAG_NONE}
+};
+
+static const char* TAG_NAMES[TAG_MAX_COUNT];
+
+void tags_display_init(void) {
+    for (int i = 0; i < TAG_MAX_COUNT; i++) TAG_NAMES[i] = "Unknown";
+    for (int i = 0; TAG_TABLE[i].string_val != NULL; i++) {
+        ElementTag tag_enum = TAG_TABLE[i].tag_enum;
+        if (tag_enum >= 0 && tag_enum < TAG_MAX_COUNT) {
+            TAG_NAMES[tag_enum] = TAG_TABLE[i].string_val;
+        }
+    }
+}
+
+
+void element_set_tag(Element *e, const ElementTag tag) {
+    e->tags[tag / 32] |= (1U << (tag % 32));
+}
+
+
+void element_set_tags(Element *e, cJSON *tags_json) {
+    for (int i = 0; i < BITSET_SIZE; i++) e->tags[i] = 0;
+
+    if (cJSON_IsArray(tags_json)) {
+        cJSON *tag_item = NULL;
+        cJSON_ArrayForEach(tag_item, tags_json) {
+            if (cJSON_IsString(tag_item)) {
+                ElementTag tag = tag_from_string(tag_item->valuestring);
+                if (tag != TAG_NONE) element_set_tag(e, tag);
+            }
+        }
+    }
+}
+
+
+int element_has_tag(const Element *e, const ElementTag tag) {
+    if (e == NULL) return 0;
+    return (e->tags[tag / 32] & (1U << (tag % 32))) != 0;
+}
+
+
+ElementTag tag_from_string(const char *str) {
+    if (str == NULL) return TAG_NONE;
+
+    for (int i = 0; TAG_TABLE[i].string_val != NULL; i++) {
+        if (strcmp(str, TAG_TABLE[i].string_val) == 0) {
+            return TAG_TABLE[i].tag_enum;
+        }
+    }
+
+    printf("Error : Tag not in tag table : %s\n", str);
+    
+    return TAG_NONE; 
+}
+
+
+const char* tag_to_string(ElementTag tag) {
+    if (tag < 0 || tag >= TAG_MAX_COUNT) return "Unknown";
+    return TAG_NAMES[tag];
+}

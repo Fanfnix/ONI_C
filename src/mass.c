@@ -17,7 +17,7 @@ void mass_display_init(void) {
 }
 
 
-Mass *mass_create(const double value, const MassUnit unit) {
+Mass *mass_create(const float value, const MassUnit unit) {
     Mass *m = (Mass*)malloc(sizeof(Mass));
     if (m != NULL) {
         m->value = value;

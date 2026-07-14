@@ -1,7 +1,7 @@
 #ifndef HEADER
 #define HEADER
 
-#define BITSET_SIZE (PROP_MAX_COUNT / 32)
+#define BITSET_SIZE (TAG_MAX_COUNT / 32)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +14,7 @@
 
 #include "mass.h"
 #include "temperature.h"
-#include "property.h"
+#include "tag.h"
 
 #include "element.h"
 #include "item.h"

@@ -1,49 +1,106 @@
 #ifndef ELEMENT
 #define ELEMENT
 
-typedef struct Mass Mass;
-typedef struct Temperature Temperature;
+/* === ENUM STATES === */
+typedef enum {
+    SOLID,
+    LIQUID,
+    GAS,
+    VACUUM
+} ElementState;
 
-// #include "cJSON.h"
+/* === STATES PROPERTIES === */
+typedef struct {
+    Mass *defaultPressure;
+    float flow;
+} GasProperties;
 
-typedef struct ElementTemperatureStats {
-    Temperature *solidificationPoint;
-    Temperature *liquefactionPoint;
-    Temperature *gasificationPoint;
-    char *solidificationTargetId;
-    char *liquefactionTargetId;
-    char *gasificationTargetId;
-    double heatCapacity;
-    double thermalConductivity;
-    double overheatBonus;  // TODO : Transformer le double en Temperature*
-} ElementTemperatureStats;
-
-typedef struct ElementMassStats {
-    Mass *defaultMass;
+typedef struct {
     Mass *maxMass;
-} ElementMassStats;
+    float liquidCompression;
+    float speed;
+    float minHorizontalFlow;
+    float minVerticalFlow;
+} LiquidProperties;
 
-typedef struct ElementStats {
-    ElementTemperatureStats *temperatures;
-    ElementMassStats *masses;
-    int hardness;
-    double lightAbsorption;
-    double decorBonus;
-} ElementStats;
+typedef struct {
+    float strength;
+    float hardness;
+    int buildMenuSort;
+    char *refinedMetalTarget;
+} SolidProperties;
 
+
+/* === ELEMENT === */
 typedef struct Element {
-    char *id;
-    char *type;
-    ElementStats *stats;
-    unsigned int properties[BITSET_SIZE];
+    char *elementId;
+
+    ElementState state;
+
+    /* Commun à tous les éléments */
+    float specificHeatCapacity;
+    float thermalConductivity;
+
+    float solidSurfaceAreaMultiplier;
+    float liquidSurfaceAreaMultiplier;
+    float gasSurfaceAreaMultiplier;
+
+    Temperature *defaultTemperature;
+    Mass *defaultMass;
+
+    Temperature *lowTemp;
+    Temperature *highTemp;
+
+    char *lowTempTransitionTarget;
+    char *highTempTransitionTarget;
+
+    char *lowTempTransitionOreId;
+    Mass *lowTempTransitionOreMassConversion;
+
+    char *highTempTransitionOreId;
+    Mass *highTempTransitionOreMassConversion;
+
+    float molarMass;
+    float toxicity;
+
+    float lightAbsorptionFactor;
+    float radiationAbsorptionFactor;
+    float radiationPer1000Mass;
+
+    /* Propriétés dépendantes de l'état */
+    union {
+        GasProperties *gas;
+        LiquidProperties *liquid;
+        SolidProperties *solid;
+    };
+
+    /* Commun mais optionnel */
+    char *sublimateId;
+    char *sublimateFx;
+    float sublimateEfficiency;
+    float sublimateProbability;
+    float offGasPercentage;
+
+    char *materialCategory;
+
+    unsigned int tags[BITSET_SIZE];
+    int tagCount;
+
+    bool isDisabled;
+
+    char *localizationID;
+    char *dlcId;
 } Element;
+
 
 int elements_init(void);
 void elements_free(void);
-void elements_show(const bool compact);
+void elements_show(void);
 const Element* element_get_by_id(const char *id);
 
 const Element* const* element_get_registry(void);
 int element_get_count(void);
+
+const char* element_state_to_string(ElementState state);
 
 #endif

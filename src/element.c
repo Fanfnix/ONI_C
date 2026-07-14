@@ -1,27 +1,36 @@
 #include "header.h"
 
-#define MAX_ELEMENTS 100
+#define MAX_ELEMENTS 250
 
-static Element* create_element();
+static cJSON *read_file(char *file_path);
+
+static Element* create_element(cJSON *element_json);
 static void free_element(Element *element);
+
 static char* json_dup_string(cJSON *obj, const char *key);
-static MassUnit parse_mass_unit(cJSON *element_json, const char *key);
-static void print_element(const Element *e);
+static ElementState parse_element_state(cJSON *obj, const char *key);
+static void parse_mass_field(cJSON *obj, const char *prefix, Mass *out_mass);
+static void parse_temperature_field(cJSON *obj, const char *key, Temperature *out_temp);
+
+static void handle_gas_parsing(cJSON *obj, Element *e);
+static void handle_liquid_parsing(cJSON *obj, Element *e);
+static void handle_solid_parsing(cJSON *obj, Element *e);
+
+static void print_element_compact(const Element *e);
+
 
 static Element **element_registry;
 static int element_count = 0;
 
-static const char *ELEMENTS_PATH = "./data/elements/elements.json";
+static const char *ELEMENTS_PATH = "./data/elements/";
+static const char *ELEMENTS_FILES[4] = {"solids.json", "liquids.json", "gas.json", "specials.json"};
 
 
-int elements_init(void) {
-
-    element_registry = (Element**)malloc(MAX_ELEMENTS * sizeof(Element*));
-
-    FILE *fp = fopen(ELEMENTS_PATH, "r");
+static cJSON *read_file(char *file_path) {
+    FILE *fp = fopen(file_path, "r");
     if (fp == NULL) {
-        printf("Error : Unable to load elements file from %s\n", ELEMENTS_PATH);
-        return 0;
+        printf("Error : Unable to load elements file from %s\n", file_path);
+        return NULL;
     }
 
     fseek(fp, 0, SEEK_END);
@@ -35,98 +44,175 @@ int elements_init(void) {
     cJSON *json = cJSON_Parse(buffer);
     free(buffer);
 
-    if (json == NULL) {
-        const char *error_ptr = cJSON_GetErrorPtr();
-        if (error_ptr != NULL) {
-            printf("Error : %s\n", error_ptr);
-        }
-        cJSON_Delete(json);
-        return 1;
-    }
-
-    int size_json = cJSON_GetArraySize(json);
-
-    for (int i = 0; i < size_json; i++) {
-
-        cJSON *element_json = cJSON_GetArrayItem(json, element_count);
-        element_registry[element_count] = create_element(element_json);
-        element_count++;
-    }
-
-    cJSON_Delete(json);
-    return 0;
+    return json;
 }
 
 
+int elements_init(void) {
+    element_registry = (Element**)malloc(MAX_ELEMENTS * sizeof(Element*));
+
+    for (int i = 0; i < 4; i++) {
+        char element_file_path[256];
+        snprintf(element_file_path, sizeof(element_file_path), "%s%s", ELEMENTS_PATH, ELEMENTS_FILES[i]);
+
+        cJSON *json = read_file(element_file_path);
+
+        if (json == NULL) {
+            const char *error_ptr = cJSON_GetErrorPtr();
+            if (error_ptr != NULL) {
+                printf("Error : %s\n", error_ptr);
+            }
+            return 1;
+        }
+
+        cJSON *elements = cJSON_GetObjectItemCaseSensitive(json, "elements");
+        if (cJSON_IsArray(elements)) {
+            int size_elements = cJSON_GetArraySize(elements);
+
+            for (int j = 0; j < size_elements && element_count < MAX_ELEMENTS; j++) {
+                cJSON *element_json = cJSON_GetArrayItem(elements, j);
+                element_registry[element_count] = create_element(element_json);
+                element_count++;
+            }
+
+        }
+        
+        cJSON_Delete(json);
+    }
+
+    return 0;
+}
+
 static Element* create_element(cJSON *element_json) {
     Element *e = (Element*)malloc(sizeof(Element));
+    memset(e, 0, sizeof(Element));
 
-    e->id = json_dup_string(element_json, "id");
-    e->type = json_dup_string(element_json, "type");
-    e->stats = (ElementStats*)malloc(sizeof(ElementStats));
+    e->elementId = json_dup_string(element_json, "elementId");
+    e->state = parse_element_state(element_json, "state");
+
+    e->specificHeatCapacity = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "specificHeatCapacity"));
+    e->thermalConductivity = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "thermalConductivity"));
     
-    cJSON *properties_json = cJSON_GetObjectItemCaseSensitive(element_json, "properties");
-    element_set_properties(e, properties_json);
+    e->solidSurfaceAreaMultiplier = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "solidSurfaceAreaMultiplier"));
+    e->liquidSurfaceAreaMultiplier = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "liquidSurfaceAreaMultiplier"));
+    e->gasSurfaceAreaMultiplier = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "gasSurfaceAreaMultiplier"));
 
-    e->stats->hardness = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "hardness"));
-    e->stats->lightAbsorption = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "lightAbsorption"));
-    e->stats->decorBonus = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "decorBonus"));
-    e->stats->temperatures = (ElementTemperatureStats*)malloc(sizeof(ElementTemperatureStats));
-    e->stats->masses = (ElementMassStats*)malloc(sizeof(ElementMassStats));
+    e->defaultTemperature = (Temperature*)malloc(sizeof(Temperature));
+    if (e->defaultTemperature) parse_temperature_field(element_json, "defaultTemperature", e->defaultTemperature);
+    e->defaultMass = (Mass*)malloc(sizeof(Mass));
+    if (e->defaultMass) parse_mass_field(element_json, "defaultMass", e->defaultMass);
+    e->lowTemp = (Temperature*)malloc(sizeof(Temperature));
+    if (e->lowTemp) parse_temperature_field(element_json, "lowTemp", e->lowTemp);
+    e->highTemp = (Temperature*)malloc(sizeof(Temperature));
+    if (e->highTemp) parse_temperature_field(element_json, "highTemp", e->highTemp);
 
-    e->stats->masses->defaultMass = (Mass*)malloc(sizeof(Mass));
-    e->stats->masses->maxMass = (Mass*)malloc(sizeof(Mass));
-    e->stats->masses->defaultMass->value = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "defaultMassValue"));
-    e->stats->masses->defaultMass->unit = parse_mass_unit(element_json, "defaultMassUnit");
-    e->stats->masses->maxMass->value = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "maxMassValue"));
-    e->stats->masses->maxMass->unit = parse_mass_unit(element_json, "maxMassUnit");
+    e->lowTempTransitionTarget = json_dup_string(element_json, "lowTempTransitionTarget");
+    e->highTempTransitionTarget = json_dup_string(element_json, "highTempTransitionTarget");
+    
+    e->lowTempTransitionOreId = json_dup_string(element_json, "lowTempTransitionOreId");
+    e->lowTempTransitionOreMassConversion = (Mass*)malloc(sizeof(Mass));
+    if (e->lowTempTransitionOreMassConversion) parse_mass_field(element_json, "lowTempTransitionOreMassConversion", e->lowTempTransitionOreMassConversion);
+    
+    e->highTempTransitionOreId = json_dup_string(element_json, "highTempTransitionOreId");
+    e->highTempTransitionOreMassConversion = (Mass*)malloc(sizeof(Mass));
+    if (e->highTempTransitionOreMassConversion) parse_mass_field(element_json, "highTempTransitionOreMassConversion", e->highTempTransitionOreMassConversion);
 
-    e->stats->temperatures->solidificationPoint = (Temperature*)malloc(sizeof(Temperature));
-    e->stats->temperatures->liquefactionPoint = (Temperature*)malloc(sizeof(Temperature));
-    e->stats->temperatures->gasificationPoint = (Temperature*)malloc(sizeof(Temperature));
-    e->stats->temperatures->solidificationTargetId = json_dup_string(element_json, "solidificationTargetId");
-    e->stats->temperatures->liquefactionTargetId = json_dup_string(element_json, "liquefactionTargetId");
-    e->stats->temperatures->gasificationTargetId = json_dup_string(element_json, "gasificationTargetId");
-    e->stats->temperatures->heatCapacity = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "heatCapacity"));
-    e->stats->temperatures->thermalConductivity = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "thermalConductivity"));
-    e->stats->temperatures->overheatBonus = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "overheatBonus"));
+    e->molarMass = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "molarMass"));
+    e->toxicity = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "toxicity"));
+    
+    e->lightAbsorptionFactor = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "lightAbsorptionFactor"));
+    e->radiationAbsorptionFactor = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "radiationAbsorptionFactor"));
+    e->radiationPer1000Mass = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "radiationPer1000Mass"));
 
-    e->stats->temperatures->solidificationPoint->value = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "solidificationPointValue"));
-    e->stats->temperatures->solidificationPoint->unit = TEMPERATURE_C;
-    e->stats->temperatures->liquefactionPoint->value = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "liquefactionPointValue"));
-    e->stats->temperatures->liquefactionPoint->unit = TEMPERATURE_C;
-    e->stats->temperatures->gasificationPoint->value = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "gasifiationPointValue"));
-    e->stats->temperatures->gasificationPoint->unit = TEMPERATURE_C;
+    // Parsing des propriétés spécifiques selon l'état de l'élément
+    if (e->state == GAS) {
+        handle_gas_parsing(element_json, e);
+    } else if (e->state == LIQUID) {
+        handle_liquid_parsing(element_json, e);
+    } else if (e->state == SOLID) {
+        handle_solid_parsing(element_json, e);
+    }
+
+    e->sublimateId = json_dup_string(element_json, "sublimateId");
+    e->sublimateFx = json_dup_string(element_json, "sublimateFx");
+    e->sublimateEfficiency = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "sublimateEfficiency"));
+    e->sublimateProbability = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "sublimateProbability"));
+    e->offGasPercentage = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(element_json, "offGasPercentage"));
+
+    e->materialCategory = json_dup_string(element_json, "materialCategory");
+
+    // Gestion des tags
+    cJSON *tags_json = cJSON_GetObjectItemCaseSensitive(element_json, "tags");
+    if (cJSON_IsArray(tags_json)) {
+        element_set_tags(e, tags_json);
+    }
+
+    cJSON *disabled_node = cJSON_GetObjectItemCaseSensitive(element_json, "isDisabled");
+    e->isDisabled = cJSON_IsTrue(disabled_node);
+
+    e->localizationID = json_dup_string(element_json, "localizationID");
+    e->dlcId = json_dup_string(element_json, "dlcId");
 
     return e;
 }
 
-static void free_element(Element *element) {
-    if (element == NULL) return;
 
-    if (element->id) free(element->id);
-    if (element->type) free(element->type);
-    if (element->stats != NULL) {
-        if (element->stats->masses != NULL) {
-            if (element->stats->masses->defaultMass) free(element->stats->masses->defaultMass);
-            if (element->stats->masses->maxMass) free(element->stats->masses->maxMass);
-            free(element->stats->masses);
-        }
-        if (element->stats->temperatures != NULL) {
-            ElementTemperatureStats *t = element->stats->temperatures;
-            if (t->solidificationPoint) free(t->solidificationPoint);
-            if (t->liquefactionPoint) free(t->liquefactionPoint);
-            if (t->gasificationPoint) free(t->gasificationPoint);
-            if (t->solidificationTargetId) free(t->solidificationTargetId);
-            if (t->liquefactionTargetId) free(t->liquefactionTargetId);
-            if (t->gasificationTargetId) free(t->gasificationTargetId);
-
-            free(t);
-        }
-        free(element->stats);
+static void handle_gas_parsing(cJSON *obj, Element *e) {
+    e->gas = (GasProperties*)malloc(sizeof(GasProperties));
+    if (e->gas) {
+        e->gas->defaultPressure = (Mass*)malloc(sizeof(Mass));
+        if (e->gas->defaultPressure) parse_mass_field(obj, "gasDefaultPressure", e->gas->defaultPressure);
+        e->gas->flow = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "gasFlow"));
     }
-    free(element);
 }
+
+
+static void handle_liquid_parsing(cJSON *obj, Element *e) {
+    e->liquid = (LiquidProperties*)malloc(sizeof(LiquidProperties));
+    if (e->liquid) {
+        e->liquid->maxMass = (Mass*)malloc(sizeof(Mass));
+        if (e->liquid->maxMass) parse_mass_field(obj, "liquidMaxMass", e->liquid->maxMass);
+        e->liquid->liquidCompression = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "liquidCompression"));
+        e->liquid->speed = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "liquidSpeed"));
+        e->liquid->minHorizontalFlow = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "liquidMinHorizontalFlow"));
+        e->liquid->minVerticalFlow = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "liquidMinVerticalFlow"));
+    }
+}
+
+
+static void handle_solid_parsing(cJSON *obj, Element *e) {
+    e->solid = (SolidProperties*)malloc(sizeof(SolidProperties));
+    if (e->solid) {
+        e->solid->strength = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "solidStrength"));
+        e->solid->hardness = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "solidHardness"));
+        e->solid->buildMenuSort = (int)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, "solidBuildMenuSort"));
+        e->solid->refinedMetalTarget = json_dup_string(obj, "solidRefinedMetalTarget");
+    }
+}
+
+
+static void free_element(Element *e) {
+    if (e == NULL) return;
+    
+    if (e->defaultTemperature) free(e->defaultTemperature);
+    if (e->defaultMass) free(e->defaultMass);
+    if (e->lowTemp) free(e->lowTemp);
+    if (e->highTemp) free(e->highTemp);
+    if (e->lowTempTransitionOreMassConversion) free(e->lowTempTransitionOreMassConversion);
+    if (e->highTempTransitionOreMassConversion) free(e->highTempTransitionOreMassConversion);
+    if (e->state == GAS) if (e->gas) {
+        if (e->gas->defaultPressure) free(e->gas->defaultPressure);
+        free(e->gas);
+    }
+    if (e->state == LIQUID) if (e->liquid) {
+        if (e->liquid->maxMass) free(e->liquid->maxMass);
+        free(e->liquid);
+    }
+    if (e->state == SOLID) if (e->solid) free(e->solid);
+
+    free(e);
+}
+
 
 void elements_free(void) {
     if (element_registry == NULL) return;
@@ -137,16 +223,44 @@ void elements_free(void) {
     }
     free(element_registry);
     element_registry = NULL;
+    element_count = 0;
 }
 
 
-static MassUnit parse_mass_unit(cJSON *element_json, const char *key) {
-    cJSON *item = cJSON_GetObjectItemCaseSensitive(element_json, key);
+static ElementState parse_element_state(cJSON *obj, const char *key) {
+    cJSON *item = cJSON_GetObjectItemCaseSensitive(obj, key);
     if (cJSON_IsString(item)) {
-        if (strcmp(item->valuestring, "kg") == 0) return MASS_KG;
-        if (strcmp(item->valuestring, "g") == 0) return MASS_G;
+        if (strcmp(item->valuestring, "Solid") == 0) return SOLID;
+        if (strcmp(item->valuestring, "Liquid") == 0) return LIQUID;
+        if (strcmp(item->valuestring, "Gas") == 0) return GAS;
+        if (strcmp(item->valuestring, "Vacuum") == 0) return VACUUM;
     }
-    return MASS_KG;
+    return VACUUM;
+}
+
+
+const char* element_state_to_string(ElementState state) {
+    switch (state) {
+        case SOLID:  return "Solid";
+        case LIQUID: return "Liquid";
+        case GAS:    return "Gas";
+        case VACUUM: return "Vacuum";
+        default:     return "Unknown";
+    }
+}
+
+
+static void parse_mass_field(cJSON *obj, const char *key, Mass *out_mass) {
+    out_mass->value = cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, key));
+    if (!strcmp(key, "defaultMass")) out_mass->unit = MASS_KG;
+    else if (!strcmp(key, "defaultPressure")) out_mass->unit = MASS_G;
+    else out_mass->unit = MASS_G;
+}
+
+
+static void parse_temperature_field(cJSON *obj, const char *key, Temperature *out_temp) {
+    out_temp->value = (float)cJSON_GetNumberValue(cJSON_GetObjectItemCaseSensitive(obj, key));
+    out_temp->unit = TEMPERATURE_K;
 }
 
 
@@ -158,105 +272,12 @@ static char* json_dup_string(cJSON *obj, const char *key) {
 
 
 const Element* element_get_by_id(const char *id) {
-    for (int i = 0; i < element_count; i++) if (strcmp(element_registry[i]->id, id) == 0) return element_registry[i];
+    for (int i = 0; i < element_count; i++) {
+        if (element_registry[i]->elementId && strcmp(element_registry[i]->elementId, id) == 0) {
+            return element_registry[i];
+        }
+    }
     return NULL;
-}
-
-
-static void print_element(const Element *e) {
-    if (e == NULL) {
-        printf("Element NULL\n");
-        return;
-    }
-
-    printf("========================================\n");
-    printf("ID   : %s\n", e->id ? e->id : "(null)");
-    printf("TYPE : %s\n", e->type ? e->type : "(null)");
-
-    if (e->stats != NULL) {
-        ElementStats *s = e->stats;
-
-        printf("--- Stats ---\n");
-        printf("  Hardness        : %d\n", s->hardness);
-        printf("  Light Absorption: %.2f\n", s->lightAbsorption);
-        printf("  Decor Bonus     : %.2f\n", s->decorBonus);
-
-        if (s->temperatures != NULL) {
-            ElementTemperatureStats *t = s->temperatures;
-
-            printf("--- Temperatures ---\n");
-
-            if (t->solidificationPoint != NULL)
-                printf("  Solidification Point : %.2f %s\n",
-                       t->solidificationPoint->value,
-                       temperature_unit_to_string(t->solidificationPoint->unit));
-            else
-                printf("  Solidification Point : (null)\n");
-
-            if (t->liquefactionPoint != NULL)
-                printf("  Liquefaction Point   : %.2f %s\n",
-                       t->liquefactionPoint->value,
-                       temperature_unit_to_string(t->liquefactionPoint->unit));
-            else
-                printf("  Liquefaction Point   : (null)\n");
-
-            if (t->gasificationPoint != NULL)
-                printf("  Gasification Point   : %.2f %s\n",
-                       t->gasificationPoint->value,
-                       temperature_unit_to_string(t->gasificationPoint->unit));
-            else
-                printf("  Gasification Point   : (null)\n");
-
-            printf("  Solidification Target: %s\n", t->solidificationTargetId ? t->solidificationTargetId : "(null)");
-            printf("  Liquefaction Target  : %s\n", t->liquefactionTargetId ? t->liquefactionTargetId : "(null)");
-            printf("  Gasification Target  : %s\n", t->gasificationTargetId ? t->gasificationTargetId : "(null)");
-
-            printf("  Heat Capacity        : %.2f\n", t->heatCapacity);
-            printf("  Thermal Conductivity : %.2f\n", t->thermalConductivity);
-            printf("  Overheat Bonus       : +%.2f °C\n", t->overheatBonus);
-        } else {
-            printf("--- Temperatures : (null) ---\n");
-        }
-
-        if (s->masses != NULL) {
-            ElementMassStats *m = s->masses;
-
-            printf("--- Masses ---\n");
-
-            if (m->defaultMass != NULL)
-                printf("  Default Mass : %.2f %s\n",
-                       m->defaultMass->value,
-                       mass_unit_to_string(m->defaultMass->unit));
-            else
-                printf("  Default Mass : (null)\n");
-
-            if (m->maxMass != NULL)
-                printf("  Max Mass     : %.2f %s\n",
-                       m->maxMass->value,
-                       mass_unit_to_string(m->maxMass->unit));
-            else
-                printf("  Max Mass     : (null)\n");
-        } else {
-            printf("--- Masses : (null) ---\n");
-        }
-    } else {
-        printf("--- Stats : (null) ---\n");
-    }
-
-    printf("--- Properties ---\n");
-    int has_property = 0;
-    
-    for (int i = 0; i < PROP_MAX_COUNT; i++) {
-        if (element_has_property(e, (ElementProperty)i)) {
-            printf("  Property[%d] : %s\n", i, property_to_string((ElementProperty)i));
-            has_property = 1;
-        }
-    }
-    if (!has_property) {
-        printf("  (aucune)\n");
-    }
-
-    printf("========================================\n");
 }
 
 
@@ -265,55 +286,18 @@ static void print_element_compact(const Element *e) {
         printf("[Element] (NULL)\n");
         return;
     }
-
-    printf("[%s] Type: %s | Hardness: %d | LightAbs: %.2f | Decor: %+.2f\n", 
-           e->id ? e->id : "?", e->type ? e->type : "?", 
-           e->stats ? e->stats->hardness : 0,
-           e->stats ? e->stats->lightAbsorption : 0.0,
-           e->stats ? e->stats->decorBonus : 0.0);
-
-    if (e->stats && e->stats->temperatures) {
-        ElementTemperatureStats *t = e->stats->temperatures;
-        printf("  > Points : Sol: %.1f%s (%s) | Liq: %.1f%s (%s) | Gas: %.1f%s (%s)\n",
-               t->solidificationPoint ? t->solidificationPoint->value : 0.0, 
-               t->solidificationPoint ? temperature_unit_to_string(t->solidificationPoint->unit) : "",
-               t->solidificationTargetId ? t->solidificationTargetId : "-",
-               t->liquefactionPoint ? t->liquefactionPoint->value : 0.0, 
-               t->liquefactionPoint ? temperature_unit_to_string(t->liquefactionPoint->unit) : "",
-               t->liquefactionTargetId ? t->liquefactionTargetId : "-",
-               t->gasificationPoint ? t->gasificationPoint->value : 0.0, 
-               t->gasificationPoint ? temperature_unit_to_string(t->gasificationPoint->unit) : "",
-               t->gasificationTargetId ? t->gasificationTargetId : "-");
-        printf("  > Thermo : SHC: %.2f | Cond: %.2f | Overheat: +%.1f°C\n", 
-               t->heatCapacity, t->thermalConductivity, t->overheatBonus);
-    }
-
-    if (e->stats && e->stats->masses) {
-        ElementMassStats *m = e->stats->masses;
-        printf("  > Masses : Default: %.1f%s | Max: %.1f%s\n",
-               m->defaultMass ? m->defaultMass->value : 0.0, 
-               m->defaultMass ? mass_unit_to_string(m->defaultMass->unit) : "",
-               m->maxMass ? m->maxMass->value : 0.0, 
-               m->maxMass ? mass_unit_to_string(m->maxMass->unit) : "");
-    }
-
-    printf("  > Tags   : ");
-    int has_prop = 0;
-    
-    for (int i = 0; i < PROP_MAX_COUNT; i++) {
-        if (element_has_property(e, (ElementProperty)i)) {
-            printf("%s%s", has_prop ? ", " : "", property_to_string((ElementProperty)i));
-            has_prop = 1;
-        }
-    }
-    printf("%s\n----------------------------------------------------------------------\n", has_prop ? "" : "(aucun)");
+    printf("[%s] State: %s | SHC: %.2f | Cond: %.2f\n",
+            e->elementId ? e->elementId : "?",
+            element_state_to_string(e->state),
+            e->specificHeatCapacity,
+            e->thermalConductivity);
 }
 
 
-void elements_show(const bool compact) {
+void elements_show(void) {
     for (int i = 0; i < element_count; i++) {
         if (element_registry[i] != NULL) {
-            (compact) ? print_element_compact(element_registry[i]) : print_element(element_registry[i]);
+            print_element_compact(element_registry[i]);
         }
     }
 }
@@ -322,6 +306,7 @@ void elements_show(const bool compact) {
 const Element* const* element_get_registry(void) {
     return (const Element* const*)element_registry;
 }
+
 
 int element_get_count(void) {
     return element_count;

@@ -8,7 +8,7 @@ typedef enum {
 } MassUnit;
 
 typedef struct {
-    double value;
+    float value;
     MassUnit unit;
 } Mass;
 
@@ -19,7 +19,7 @@ typedef struct {
 
 void mass_display_init(void);
 
-Mass *mass_create(const double value, const MassUnit unit);
+Mass *mass_create(const float value, const MassUnit unit);
 void mass_convert_to(Mass *m, const MassUnit target_unit);
 
 MassUnit mass_unit_from_string(const char *str);

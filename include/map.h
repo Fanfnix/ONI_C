@@ -7,8 +7,6 @@
 #define TILE_SIZE 64
 #define CAMERA_SPEED (TILE_SIZE * 3 / 5)
 
-typedef struct Tile;
-
 typedef struct {
     Tile *grid[MAP_HEIGHT][MAP_WIDTH];
 } Map;

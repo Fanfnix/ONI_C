@@ -1,10 +1,6 @@
 #ifndef ELEMENT
 #define ELEMENT
 
-typedef struct Mass;
-typedef struct Temperature;
-typedef struct ElementTag;
-
 /* === ENUM STATES === */
 typedef enum {
     SOLID,
@@ -14,12 +10,12 @@ typedef enum {
 
 /* === STATES PROPERTIES === */
 typedef struct {
-    Mass defaultPressure;
+    Mass *defaultPressure;
     float flow;
 } GasProperties;
 
 typedef struct {
-    Mass maxMass;
+    Mass *maxMass;
     float liquidCompression;
     float speed;
     float minHorizontalFlow;
@@ -33,15 +29,9 @@ typedef struct {
     char *refinedMetalTarget;
 } SolidProperties;
 
-/* === UNION PROPERTIES === */
-typedef union {
-    GasProperties gas;
-    LiquidProperties liquid;
-    SolidProperties solid;
-} ElementProperties;
 
 /* === ELEMENT === */
-typedef struct {
+typedef struct Element {
     char *elementId;
 
     ElementState state;
@@ -54,20 +44,20 @@ typedef struct {
     float liquidSurfaceAreaMultiplier;
     float gasSurfaceAreaMultiplier;
 
-    Temperature defaultTemperature;
-    Mass defaultMass;
+    Temperature *defaultTemperature;
+    Mass *defaultMass;
 
-    Temperature lowTemp;
-    Temperature highTemp;
+    Temperature *lowTemp;
+    Temperature *highTemp;
 
     char *lowTempTransitionTarget;
     char *highTempTransitionTarget;
 
     char *lowTempTransitionOreId;
-    Mass lowTempTransitionOreMassConversion;
+    Mass *lowTempTransitionOreMassConversion;
 
     char *highTempTransitionOreId;
-    Mass highTempTransitionOreMassConversion;
+    Mass *highTempTransitionOreMassConversion;
 
     float molarMass;
     float toxicity;
@@ -77,7 +67,11 @@ typedef struct {
     float radiationPer1000Mass;
 
     /* Propriétés dépendantes de l'état */
-    ElementProperties properties;
+    union {
+        GasProperties *gas;
+        LiquidProperties *liquid;
+        SolidProperties *solid;
+    };
 
     /* Commun mais optionnel */
     char *sublimateId;
@@ -88,7 +82,7 @@ typedef struct {
 
     char *materialCategory;
 
-    ElementTag *tags;
+    unsigned int tags[BITSET_SIZE];
     int tagCount;
 
     bool isDisabled;
@@ -100,7 +94,7 @@ typedef struct {
 
 int elements_init(void);
 void elements_free(void);
-void elements_show(const bool compact);
+void elements_show(void);
 const Element* element_get_by_id(const char *id);
 
 const Element* const* element_get_registry(void);

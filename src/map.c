@@ -29,7 +29,7 @@ static Tile *create_random_tile(int i) {
     int index_element = rand() % element_get_count();
     const Element *element = element_registry[index_element];
 
-    Mass *mass = mass_create(element->stats->masses->defaultMass->value, element->stats->masses->defaultMass->unit);
+    Mass *mass = mass_create(element->defaultMass->value, element->defaultMass->unit);
     Temperature * temperature = temperature_create(20.0, TEMPERATURE_C);
 
     return create_tile_from_element(i, element, mass, temperature);
@@ -85,7 +85,7 @@ static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX
                 continue;
             }
 
-            SDL_Color color = element_get_color(tile->item->element->id);
+            SDL_Color color = element_get_color(tile->item->element->elementId);
             SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
             SDL_RenderFillRect(renderer, &tile_rect);
         }

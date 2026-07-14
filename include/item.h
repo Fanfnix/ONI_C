@@ -1,10 +1,6 @@
 #ifndef ITEM
 #define ITEM
 
-typedef struct Element;
-typedef struct Mass;
-typedef struct Temperature;
-
 typedef struct {
     const Element *element;
     Mass *mass;

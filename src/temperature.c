@@ -19,7 +19,7 @@ void temperature_display_init(void) {
 }
 
 
-Temperature* temperature_create(const double value, const TemperatureUnit unit) {
+Temperature* temperature_create(const float value, const TemperatureUnit unit) {
     Temperature *t = (Temperature*)malloc(sizeof(Temperature));
     if (t != NULL) {
         t->value = value;

@@ -50,7 +50,7 @@ int main(void) {
         SDL_SetRenderDrawColor(game_window->renderer, blanc.r, blanc.g, blanc.b, blanc.a);
         SDL_RenderClear(game_window->renderer);
 
-        map_render(map, game_window->renderer, game_window->cameraX, game_window->cameraY);
+        map_render(map, game_window);
 
         SDL_RenderPresent(game_window->renderer);
 

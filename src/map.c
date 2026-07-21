@@ -3,8 +3,8 @@
 
 static Tile *create_random_tile(int i);
 
-static void map_render_checkerboard(SDL_Renderer *renderer, int cameraX, int cameraY);
-static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX, int cameraY);
+static void map_render_checkerboard(SDL_Renderer *renderer, int cameraX, int cameraY, float zoom);
+static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX, int cameraY, float zoom);
 
 
 Map *create_map(void) {
@@ -36,19 +36,23 @@ static Tile *create_random_tile(int i) {
 }
 
 
-static void map_render_checkerboard(SDL_Renderer *renderer, int cameraX, int cameraY) {
+static void map_render_checkerboard(SDL_Renderer *renderer, int cameraX, int cameraY, float zoom) {
+    
+    int scaled_tile = (int)(TILE_SIZE * zoom);
+    if (scaled_tile < 1) scaled_tile = 1;
+
     SDL_Rect tile_rect;
-    tile_rect.w = TILE_SIZE;
-    tile_rect.h = TILE_SIZE;
+    tile_rect.w = scaled_tile;
+    tile_rect.h = scaled_tile;
 
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
 
-            tile_rect.x = x * TILE_SIZE - cameraX;
-            tile_rect.y = y * TILE_SIZE - cameraY;
+            tile_rect.x = x * scaled_tile - cameraX;
+            tile_rect.y = y * scaled_tile - cameraY;
 
-            if (tile_rect.x + TILE_SIZE < 0 || tile_rect.x > GAME_WIDTH ||
-                tile_rect.y + TILE_SIZE < 0 || tile_rect.y > GAME_HEIGHT) {
+            if (tile_rect.x + scaled_tile < 0 || tile_rect.x > GAME_WIDTH ||
+                tile_rect.y + scaled_tile < 0 || tile_rect.y > GAME_HEIGHT) {
                 continue;
             }
 
@@ -64,19 +68,23 @@ static void map_render_checkerboard(SDL_Renderer *renderer, int cameraX, int cam
 }
 
 
-static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX, int cameraY) {
+static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX, int cameraY, float zoom) {
+
+    int scaled_tile = (int)(TILE_SIZE * zoom);
+    if (scaled_tile < 1) scaled_tile = 1;
+
     SDL_Rect tile_rect;
-    tile_rect.w = TILE_SIZE;
-    tile_rect.h = TILE_SIZE;
+    tile_rect.w = scaled_tile;
+    tile_rect.h = scaled_tile;
 
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
 
-            tile_rect.x = x * TILE_SIZE - cameraX;
-            tile_rect.y = y * TILE_SIZE - cameraY;
+            tile_rect.x = x * scaled_tile - cameraX;
+            tile_rect.y = y * scaled_tile - cameraY;
 
-            if (tile_rect.x + TILE_SIZE < 0 || tile_rect.x > GAME_WIDTH ||
-                tile_rect.y + TILE_SIZE < 0 || tile_rect.y > GAME_HEIGHT) {
+            if (tile_rect.x + scaled_tile < 0 || tile_rect.x > GAME_WIDTH ||
+                tile_rect.y + scaled_tile < 0 || tile_rect.y > GAME_HEIGHT) {
                 continue;
             }
 
@@ -94,7 +102,11 @@ static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX
 }
 
 
-void map_render(Map *map, SDL_Renderer *renderer, int cameraX, int cameraY) {
-    map_render_checkerboard(renderer, cameraX, cameraY);
-    map_render_tiles(map, renderer, cameraX, cameraY);
+void map_render(Map *map, GameWindow *game_window) {
+    SDL_Renderer *renderer = game_window->renderer;
+    int cameraX = game_window->cameraX;
+    int cameraY = game_window->cameraY;
+    float zoom = game_window->zoom;
+    map_render_checkerboard(renderer, cameraX, cameraY, zoom);
+    map_render_tiles(map, renderer, cameraX, cameraY, zoom);
 }

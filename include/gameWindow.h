@@ -12,7 +12,7 @@
 #define GAME_WINDOW_FLAGS (SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE)
 #define GAME_WINDOW_NAME "Oxygen Not Included"
 
-typedef struct {
+struct GameWindow {
     int posX, posY;
     int width, height;
     int fullscreen;
@@ -20,7 +20,10 @@ typedef struct {
     SDL_Renderer *renderer;
     int pending_restore;
     int cameraX, cameraY;
-} GameWindow;
+    float zoom;
+};
+
+typedef struct GameWindow GameWindow;
 
 GameWindow *create_game_window();
 

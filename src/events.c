@@ -2,6 +2,7 @@
 
 
 static void handle_keydown(SDL_Event *event, GameWindow *game_window, SDL_bool *running);
+static void handle_mouse_wheel(SDL_Event *event, GameWindow *game_window);
 static void toggle_fullscreen(GameWindow *game_window);
 static void handle_windowevent(SDL_Event *event, GameWindow *game_window);
 
@@ -23,11 +24,20 @@ static void handle_keydown(SDL_Event *event, GameWindow *game_window, SDL_bool *
 }
 
 
+static void handle_mouse_wheel(SDL_Event *event, GameWindow *game_window) {
+    if (event->wheel.y > 0) {
+        game_window->zoom += 0.1f;
+    }
+    else if (event->wheel.y < 0) {
+        game_window->zoom -= 0.1f;
+    }
+}
+
+
 static void toggle_fullscreen(GameWindow *game_window) {
     if (!game_window->fullscreen) {
         SDL_GetWindowPosition(game_window->window, &game_window->posX, &game_window->posY);
         SDL_GetWindowSize(game_window->window, &game_window->width, &game_window->height);
-        printf("Going Fullscreen.");
         SDL_SetWindowFullscreen(game_window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
         game_window->fullscreen = 1;
     } else {
@@ -45,7 +55,6 @@ static void handle_windowevent(SDL_Event *event, GameWindow *game_window) {
             SDL_SetWindowSize(game_window->window, game_window->width, game_window->height);
             SDL_SetWindowPosition(game_window->window, game_window->posX, game_window->posY);
             game_window->pending_restore = 0;
-            printf("Leaving Fullscreen.");
         }
     }
 }
@@ -67,6 +76,10 @@ void handle_events(GameWindow *game_window, SDL_bool *running) {
 
             case SDL_WINDOWEVENT:
                 handle_windowevent(&event, game_window);
+                break;
+            
+            case SDL_MOUSEWHEEL:
+                handle_mouse_wheel(&event, game_window);
                 break;
 
             default:
@@ -94,6 +107,4 @@ void handle_camera_movement(GameWindow *game_window) {
     if (game_window->cameraY < 0) game_window->cameraY = 0;
     if (game_window->cameraX > max_camera_x) game_window->cameraX = max_camera_x;
     if (game_window->cameraY > max_camera_y) game_window->cameraY = max_camera_y;
-
-    // printf("camera=(%d,%d) max=(%d,%d)\n", game_window->cameraX, game_window->cameraY, max_camera_x, max_camera_y);
 }

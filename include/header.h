@@ -21,8 +21,10 @@
 #include "tile.h"
 #include "map.h"
 
-#include "elementColor.h"
 #include "gameWindow.h"
 #include "events.h"
+
+#include "elementColorMapping.h"
+#include "elementTextureMapping.h"
 
 #endif

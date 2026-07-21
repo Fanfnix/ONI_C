@@ -85,16 +85,16 @@ static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX
                 continue;
             }
 
-            SDL_Color color = element_get_color(tile->item->element->elementId);
-            SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-            SDL_RenderFillRect(renderer, &tile_rect);
+            SDL_Color c = element_get_color(tile->item->element->elementId);
+            SDL_Texture *tex = element_get_texture(tile->item->element->elementId);
+            SDL_SetTextureColorMod(tex, c.r, c.g, c.b);
+            SDL_RenderCopy(renderer, tex, NULL, &tile_rect);
         }
     }
 }
 
 
 void map_render(Map *map, SDL_Renderer *renderer, int cameraX, int cameraY) {
-
     map_render_checkerboard(renderer, cameraX, cameraY);
     map_render_tiles(map, renderer, cameraX, cameraY);
 }

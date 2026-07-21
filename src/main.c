@@ -26,6 +26,8 @@ int main(void) {
 
     elements_init();
 
+    element_texture_init(game_window);
+
     Map *map = create_map();
     map_init(map);
 

@@ -1,5 +1,5 @@
-#ifndef ELEMENT_COLOR
-#define ELEMENT_COLOR
+#ifndef ELEMENT_COLOR_MAPPING
+#define ELEMENT_COLOR_MAPPING
 
 typedef struct {
     const char *id;

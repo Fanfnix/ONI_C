@@ -1,7 +1,5 @@
 #include "header.h"
 
-#define MAX_ELEMENTS 250
-
 static cJSON *read_file(char *file_path);
 
 static Element* create_element(cJSON *element_json);
@@ -286,11 +284,10 @@ static void print_element_compact(const Element *e) {
         printf("[Element] (NULL)\n");
         return;
     }
-    printf("[%s] State: %s | SHC: %.2f | Cond: %.2f\n",
+    printf("[%s] State: %s | Category: %s\n",
             e->elementId ? e->elementId : "?",
             element_state_to_string(e->state),
-            e->specificHeatCapacity,
-            e->thermalConductivity);
+            e->materialCategory);
 }
 
 

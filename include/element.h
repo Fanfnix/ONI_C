@@ -1,6 +1,8 @@
 #ifndef ELEMENT
 #define ELEMENT
 
+#define MAX_ELEMENTS 250
+
 /* === ENUM STATES === */
 typedef enum {
     SOLID,

@@ -270,11 +270,16 @@ static char* json_dup_string(cJSON *obj, const char *key) {
 
 
 const Element* element_get_by_id(const char *id) {
+    omp_set_dynamic(0);
+    int element_index = -1;
+
+    #pragma omp parallel for schedule(static)
     for (int i = 0; i < element_count; i++) {
         if (element_registry[i]->elementId && strcmp(element_registry[i]->elementId, id) == 0) {
-            return element_registry[i];
+            element_index = i;
         }
     }
+    if (element_index >= 0) return element_registry[element_index];
     return NULL;
 }
 

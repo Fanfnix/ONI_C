@@ -1,7 +1,7 @@
 #include "header.h"
 
 
-static const ElementColorMapping ELEMENT_COLOR_TABLE[MAX_ELEMENTS] = {
+static const ElementColorMapping ELEMENT_COLOR_TABLE[] = {
     {"Aerogel",             {230, 240, 245, 255}}, /* bleu très clair translucide */
     {"Algae",               {60,  140, 60,  255}}, /* vert algue */
     {"Aluminum",            {211, 214, 218, 255}}, /* argenté */
@@ -155,16 +155,17 @@ static const ElementColorMapping ELEMENT_COLOR_TABLE[MAX_ELEMENTS] = {
 
 
 SDL_Color element_get_color(const char *element_id) {
-    if (element_id == NULL) {
-        return ELEMENT_COLOR_TABLE[(sizeof(ELEMENT_COLOR_TABLE) / sizeof(ELEMENT_COLOR_TABLE[0])) - 1].color;
-    }
+    size_t table_size = sizeof(ELEMENT_COLOR_TABLE) / sizeof(ELEMENT_COLOR_TABLE[0]);
+    SDL_Color default_color = ELEMENT_COLOR_TABLE[table_size - 1].color;
 
-    for (int i = 0; ELEMENT_COLOR_TABLE[i].id != NULL; i++) {
+    if (element_id == NULL) return default_color;
+
+    for (size_t i = 0; i < table_size - 1; i++) {
         if (strcmp(element_id, ELEMENT_COLOR_TABLE[i].id) == 0) {
             return ELEMENT_COLOR_TABLE[i].color;
         }
     }
 
     printf("Error : No color mapped for element id : %s\n", element_id);
-    return ELEMENT_COLOR_TABLE[(sizeof(ELEMENT_COLOR_TABLE) / sizeof(ELEMENT_COLOR_TABLE[0])) - 1].color;
+    return default_color;
 }

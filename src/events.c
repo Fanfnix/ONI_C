@@ -92,8 +92,8 @@ void handle_events(GameWindow *game_window, SDL_bool *running) {
 void handle_camera_movement(GameWindow *game_window) {
     const Uint8 *keystate = SDL_GetKeyboardState(NULL);
 
-    int map_width_px = MAP_WIDTH * TILE_SIZE;
-    int map_height_px = MAP_HEIGHT * TILE_SIZE;
+    int map_width_px = (int)(MAP_WIDTH * TILE_SIZE * game_window->zoom);
+    int map_height_px = (int)(MAP_HEIGHT * TILE_SIZE * game_window->zoom);
 
     int max_camera_x = (map_width_px > GAME_WIDTH) ? (map_width_px - GAME_WIDTH) : 0;
     int max_camera_y = (map_height_px > GAME_HEIGHT) ? (map_height_px - GAME_HEIGHT) : 0;

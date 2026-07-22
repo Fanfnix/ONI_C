@@ -5,18 +5,19 @@ static ElementTextureMapping ELEMENT_TEXTURE_TABLE[MAX_ELEMENTS];
 
 
 SDL_Texture *element_get_texture(const char *element_id) {
-    if (element_id == NULL) {
-        return ELEMENT_TEXTURE_TABLE[(sizeof(ELEMENT_TEXTURE_TABLE) / sizeof(ELEMENT_TEXTURE_TABLE[0])) - 1].tex;
-    }
+    size_t table_size = sizeof(ELEMENT_TEXTURE_TABLE) / sizeof(ELEMENT_TEXTURE_TABLE[0]);
+    SDL_Texture *default_texture = ELEMENT_TEXTURE_TABLE[table_size - 1].tex;
 
-    for (int i = 0; ELEMENT_TEXTURE_TABLE[i].id != NULL; i++) {
+    if (element_id == NULL) return default_texture;
+
+    for (size_t i = 0; i < table_size; i++) {
         if (strcmp(element_id, ELEMENT_TEXTURE_TABLE[i].id) == 0) {
             return ELEMENT_TEXTURE_TABLE[i].tex;
         }
     }
 
     printf("Error : No color mapped for element id : %s\n", element_id);
-    return ELEMENT_TEXTURE_TABLE[(sizeof(ELEMENT_TEXTURE_TABLE) / sizeof(ELEMENT_TEXTURE_TABLE[0])) - 1].tex;
+    return default_texture;
 }
 
 

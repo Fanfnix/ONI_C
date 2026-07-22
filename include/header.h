@@ -11,23 +11,23 @@
 #include <SDL2/SDL.h>
 #include <omp.h>
 
-#include "mass.h"
-#include "temperature.h"
-#include "tag.h"
+#include "utils/mass.h"
+#include "utils/temperature.h"
+#include "utils/tag.h"
 
-#include "element.h"
-#include "elements_generated.h"
+#include "elements/element.h"
+#include "elements/elements_generated.h"
 
 #include "item.h"
-#include "tile.h"
 
-#include "mapGeneration.h"
-#include "map.h"
+#include "map/tile.h"
+#include "map/mapGeneration.h"
+#include "map/map.h"
 
-#include "gameWindow.h"
-#include "events.h"
+#include "gameWindow/gameWindow.h"
+#include "gameWindow/events.h"
 
-#include "elementColorMapping.h"
-#include "elementTextureMapping.h"
+#include "elements/elementColorMapping.h"
+#include "elements/elementTextureMapping.h"
 
 #endif

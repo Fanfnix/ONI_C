@@ -9,6 +9,6 @@ Item* create_item_from_element(const Element* element, Mass mass, Temperature te
     return item;
 }
 
-Item* create_item_from_id(const int element_index, Mass mass, Temperature temperature) {
+Item* create_item_from_id(ElementId element_index, Mass mass, Temperature temperature) {
     return create_item_from_element(&ELEMENT_REGISTRY[element_index], mass, temperature);
 }

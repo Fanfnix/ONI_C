@@ -8,6 +8,6 @@ typedef struct {
 } Item;
 
 Item* create_item_from_element(const Element* element, Mass mass, Temperature temperature);
-Item* create_item_from_id(const int element_index, Mass mass, Temperature temperature);
+Item* create_item_from_id(ElementId element_index, Mass mass, Temperature temperature);
 
 #endif

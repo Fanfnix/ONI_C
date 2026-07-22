@@ -1,38 +1,25 @@
 #include "header.h"
 
 
-static Tile *create_random_tile(int i);
-
 static void map_render_checkerboard(SDL_Renderer *renderer, int cameraX, int cameraY, float zoom);
 static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX, int cameraY, float zoom);
 
 
 Map *create_map(void) {
     Map *map = (Map*)malloc(sizeof(Map));
+    if (map != NULL) map_init(map);
     return map;
 }
 
 
 void map_init(Map *map) {
-    int i = 0;
+    MapGenerator *map_generator = (MapGenerator*)malloc(sizeof(MapGenerator));
+    if (map_generator != NULL) get_seed(&map_generator->seed);
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
-            map->grid[y][x] = create_random_tile(i);
-            i++;
+            map->grid[y][x] = generate_tile(map, map_generator);
         }
     }
-}
-
-
-static Tile *create_random_tile(int i) {
-    const Element* const *element_registry = element_get_registry();
-    int index_element = rand() % element_get_count();
-    const Element *element = element_registry[index_element];
-
-    Mass *mass = mass_create(element->defaultMass->value, element->defaultMass->unit);
-    Temperature * temperature = temperature_create(20.0, TEMPERATURE_C);
-
-    return create_tile_from_element(i, element, mass, temperature);
 }
 
 

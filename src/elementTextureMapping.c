@@ -26,7 +26,7 @@ void element_texture_init(GameWindow *game) {
     int element_count = element_get_count();
 
     for (int i = 0; i < element_count; i++) {
-        SDL_Surface* surf = SDL_LoadBMP("./data/tex/rawMineral.bmp");
+        SDL_Surface* surf = SDL_LoadBMP("./data/tex/base.bmp");
         SDL_Texture* tex = SDL_CreateTextureFromSurface(game->renderer, surf);
         SDL_FreeSurface(surf);
         ELEMENT_TEXTURE_TABLE[i] = (ElementTextureMapping){element_registry[i]->elementId, tex};

@@ -29,7 +29,6 @@ int main(void) {
     element_texture_init(game_window);
 
     Map *map = create_map();
-    map_init(map);
 
     SDL_Color blanc = {255, 255, 255, 255};
 

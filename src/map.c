@@ -17,7 +17,7 @@ void map_init(Map *map) {
     if (map_generator != NULL) get_seed(&map_generator->seed);
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
-            map->grid[y][x] = generate_tile(map, map_generator);
+            map->grid[y][x] = generate_tile(map, map_generator, x, y);
         }
     }
 }
@@ -75,13 +75,13 @@ static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX
                 continue;
             }
 
-            const Tile *tile = map->grid[y][x];
+            Tile *tile = map->grid[y][x];
             if (tile == NULL || tile->item == NULL || tile->item->element == NULL) {
                 continue;
             }
 
-            SDL_Color c = element_get_color(tile->item->element->elementId);
-            SDL_Texture *tex = element_get_texture(tile->item->element->elementId);
+            SDL_Color c = element_get_color(element_get_index(tile->item->element));
+            SDL_Texture *tex = element_get_texture(element_get_index(tile->item->element));
             SDL_SetTextureColorMod(tex, c.r, c.g, c.b);
             SDL_RenderCopy(renderer, tex, NULL, &tile_rect);
         }

@@ -19,7 +19,6 @@ typedef struct {
 
 void temperature_display_init(void);
 
-Temperature* temperature_create(const float value, const TemperatureUnit unit);
 void temperature_convert_to(Temperature *t, const TemperatureUnit target_unit);
 
 TemperatureUnit temperature_unit_from_string(const char *str);

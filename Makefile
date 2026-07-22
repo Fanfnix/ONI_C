@@ -1,17 +1,15 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -g -Iinclude/ -Idata/cJson -fopenmp
+CFLAGS=-Wall -Wextra -g -Iinclude/ -fopenmp
 SDLFLAGS=$(shell pkg-config --cflags --libs sdl2)
 LDFLAGS=-lm -lncurses -fopenmp $(SDLFLAGS)
 
 SRCDIR=src
-CJSONDIR=data/cJson
 OBJDIR=obj
 
 APPNAME=oni
 
-SRC=$(shell find $(SRCDIR) -name '*.c') $(CJSONDIR)/cJSON.c
-OBJ=$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(filter $(SRCDIR)/%.c,$(SRC))) \
-    $(patsubst $(CJSONDIR)/%.c,$(OBJDIR)/cjson/%.o,$(filter $(CJSONDIR)/%.c,$(SRC)))
+SRC=$(shell find $(SRCDIR) -name '*.c')
+OBJ=$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(filter $(SRCDIR)/%.c,$(SRC)))
 
 .PHONY: all clean mrpropre
 
@@ -21,10 +19,6 @@ $(APPNAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-$(OBJDIR)/cjson/%.o: $(CJSONDIR)/%.c | $(OBJDIR)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 

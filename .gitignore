@@ -1,6 +1,7 @@
 *.txt
 *.yaml
+*.json
+*.py
 
 *.o
-oni.out
 oni

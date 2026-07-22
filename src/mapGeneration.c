@@ -15,17 +15,16 @@ void get_seed(uint64_t *seed) {
 
 
 Tile *create_random_tile() {
-    const Element* const *element_registry = element_get_registry();
-    int index_element = rand() % element_get_count();
-    const Element *element = element_registry[index_element];
+    int element_index = rand() % ELEMENT_ID_COUNT;
+    const Element *element = &ELEMENT_REGISTRY[element_index];
 
-    Mass *mass = mass_create(element->defaultMass->value, element->defaultMass->unit);
-    Temperature * temperature = temperature_create(20.0, TEMPERATURE_C);
+    Mass mass = {element->defaultMass.value, element->defaultMass.unit};
+    Temperature temperature = {20.0, TEMPERATURE_C};
 
     return create_tile_from_element(element, mass, temperature);
 }
 
 
-Tile *generate_tile(Map *map, MapGenerator *map_generator) {
+Tile *generate_tile(Map *map, MapGenerator *map_generator, int x, int y) {
     return create_random_tile();
 }

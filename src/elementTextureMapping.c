@@ -1,34 +1,23 @@
 #include "header.h"
 
 
-static ElementTextureMapping ELEMENT_TEXTURE_TABLE[MAX_ELEMENTS];
+static ElementTextureMapping ELEMENT_TEXTURE_TABLE[ELEMENT_ID_COUNT];
 
 
-SDL_Texture *element_get_texture(const char *element_id) {
-    size_t table_size = sizeof(ELEMENT_TEXTURE_TABLE) / sizeof(ELEMENT_TEXTURE_TABLE[0]);
-    SDL_Texture *default_texture = ELEMENT_TEXTURE_TABLE[table_size - 1].tex;
-
-    if (element_id == NULL) return default_texture;
-
-    for (size_t i = 0; i < table_size; i++) {
-        if (strcmp(element_id, ELEMENT_TEXTURE_TABLE[i].id) == 0) {
-            return ELEMENT_TEXTURE_TABLE[i].tex;
-        }
+SDL_Texture *element_get_texture(ElementId element_index) {
+    if (element_index < 0 || element_index > ELEMENT_ID_COUNT) {
+        printf("ERROR (element_get_texture) : Index out of range : %d\n", element_index);
+        return ELEMENT_TEXTURE_TABLE[ELEMENT_ID_COUNT].tex;
     }
-
-    printf("Error : No color mapped for element id : %s\n", element_id);
-    return default_texture;
+    return ELEMENT_TEXTURE_TABLE[element_index].tex;
 }
 
 
 void element_texture_init(GameWindow *game) {
-    const Element* const *element_registry = element_get_registry();
-    int element_count = element_get_count();
-
-    for (int i = 0; i < element_count; i++) {
+    for (int i = 0; i < ELEMENT_ID_COUNT; i++) {
         SDL_Surface* surf = SDL_LoadBMP("./data/tex/base.bmp");
         SDL_Texture* tex = SDL_CreateTextureFromSurface(game->renderer, surf);
         SDL_FreeSurface(surf);
-        ELEMENT_TEXTURE_TABLE[i] = (ElementTextureMapping){element_registry[i]->elementId, tex};
+        ELEMENT_TEXTURE_TABLE[i] = (ElementTextureMapping){ELEMENT_REGISTRY[i].elementId, tex};
     }
 }

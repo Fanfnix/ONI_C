@@ -11,13 +11,13 @@
 #include <SDL2/SDL.h>
 #include <omp.h>
 
-#include "cJSON.h"
-
 #include "mass.h"
 #include "temperature.h"
 #include "tag.h"
 
 #include "element.h"
+#include "elements_generated.h"
+
 #include "item.h"
 #include "tile.h"
 

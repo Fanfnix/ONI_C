@@ -61,29 +61,8 @@ void tags_display_init(void) {
 }
 
 
-void element_set_tag(Element *e, const ElementTag tag) {
-    e->tags[tag / 32] |= (1U << (tag % 32));
-}
-
-
-void element_set_tags(Element *e, cJSON *tags_json) {
-    for (int i = 0; i < BITSET_SIZE; i++) e->tags[i] = 0;
-
-    if (cJSON_IsArray(tags_json)) {
-        cJSON *tag_item = NULL;
-        cJSON_ArrayForEach(tag_item, tags_json) {
-            if (cJSON_IsString(tag_item)) {
-                ElementTag tag = tag_from_string(tag_item->valuestring);
-                if (tag != TAG_NONE) element_set_tag(e, tag);
-            }
-        }
-    }
-}
-
-
-int element_has_tag(const Element *e, const ElementTag tag) {
-    if (e == NULL) return 0;
-    return (e->tags[tag / 32] & (1U << (tag % 32))) != 0;
+int element_has_tag(const Element e, const ElementTag tag) {
+    return (e.tags[tag / 32] & (1U << (tag % 32))) != 0;
 }
 
 

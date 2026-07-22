@@ -11,6 +11,6 @@ typedef struct Map Map;
 Tile *create_random_tile();
 
 void get_seed(uint64_t *seed);
-Tile *generate_tile(Map *map, MapGenerator *map_generator);
+Tile *generate_tile(Map *map, MapGenerator *map_generator, int x, int y);
 
 #endif

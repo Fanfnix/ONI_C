@@ -17,16 +17,6 @@ void mass_display_init(void) {
 }
 
 
-Mass *mass_create(const float value, const MassUnit unit) {
-    Mass *m = (Mass*)malloc(sizeof(Mass));
-    if (m != NULL) {
-        m->value = value;
-        m->unit = unit;
-    }
-    return m;
-}
-
-
 void mass_convert_to(Mass *m, const MassUnit target_unit) {
     if (m == NULL || m->unit == target_unit) return;
     if (m->unit == MASS_KG) {

@@ -57,9 +57,7 @@ typedef struct {
 
 void tags_display_init(void);
 
-void element_set_tag(Element *e, const ElementTag tag);
-void element_set_tags(Element *e, cJSON *tags_json);
-int element_has_tag(const Element *e, const ElementTag tag);
+int element_has_tag(const Element e, const ElementTag tag);
 
 ElementTag tag_from_string(const char *str);
 const char* tag_to_string(ElementTag tag);

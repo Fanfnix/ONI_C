@@ -154,18 +154,10 @@ static const ElementColorMapping ELEMENT_COLOR_TABLE[] = {
 };
 
 
-SDL_Color element_get_color(const char *element_id) {
-    size_t table_size = sizeof(ELEMENT_COLOR_TABLE) / sizeof(ELEMENT_COLOR_TABLE[0]);
-    SDL_Color default_color = ELEMENT_COLOR_TABLE[table_size - 1].color;
-
-    if (element_id == NULL) return default_color;
-
-    for (size_t i = 0; i < table_size - 1; i++) {
-        if (strcmp(element_id, ELEMENT_COLOR_TABLE[i].id) == 0) {
-            return ELEMENT_COLOR_TABLE[i].color;
-        }
+SDL_Color element_get_color(ElementId element_index) {
+    if (element_index < 0 || element_index > ELEMENT_ID_COUNT) {
+        printf("ERROR (element_get_color) : Index out of range : %d\n", element_index);
+        return ELEMENT_COLOR_TABLE[ELEMENT_ID_COUNT].color;
     }
-
-    printf("Error : No color mapped for element id : %s\n", element_id);
-    return default_color;
+    return ELEMENT_COLOR_TABLE[element_index].color;
 }

@@ -1,7 +1,7 @@
 #include <header.h>
 
 
-Item* create_item_from_element(const Element* element, Mass *mass, Temperature *temperature) {
+Item* create_item_from_element(const Element* element, Mass mass, Temperature temperature) {
     Item *item = (Item*)malloc(sizeof(Item));
     item->element = element;
     item->mass = mass;
@@ -9,6 +9,6 @@ Item* create_item_from_element(const Element* element, Mass *mass, Temperature *
     return item;
 }
 
-Item* create_item_from_id(const char *element_id, Mass *mass, Temperature *temperature) {
-    return create_item_from_element(element_get_by_id(element_id), mass, temperature);
+Item* create_item_from_id(const int element_index, Mass mass, Temperature temperature) {
+    return create_item_from_element(&ELEMENT_REGISTRY[element_index], mass, temperature);
 }

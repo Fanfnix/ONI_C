@@ -24,8 +24,6 @@ int main(void) {
     mass_display_init();
     temperature_display_init();
 
-    elements_init();
-
     element_texture_init(game_window);
 
     Map *map = create_map();
@@ -59,7 +57,6 @@ int main(void) {
 
     /*=== GAME CLOSING ===*/
 
-    elements_free();
 Quit:
     if (game_window->renderer != NULL) SDL_DestroyRenderer(game_window->renderer);
     if (game_window->window != NULL) SDL_DestroyWindow(game_window->window);

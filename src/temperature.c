@@ -19,16 +19,6 @@ void temperature_display_init(void) {
 }
 
 
-Temperature* temperature_create(const float value, const TemperatureUnit unit) {
-    Temperature *t = (Temperature*)malloc(sizeof(Temperature));
-    if (t != NULL) {
-        t->value = value;
-        t->unit = unit;
-    }
-    return t;
-}
-
-
 void temperature_convert_to(Temperature *t, const TemperatureUnit target_unit) {
     if (t == NULL || t->unit == target_unit) return;
     if (t->unit == TEMPERATURE_C) {

@@ -6,6 +6,6 @@ typedef struct {
     SDL_Color color;
 } ElementColorMapping;
 
-SDL_Color element_get_color(const char *element_id);
+SDL_Color element_get_color(ElementId element_index);
 
 #endif

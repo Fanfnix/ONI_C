@@ -1,8 +1,6 @@
 #ifndef ELEMENT
 #define ELEMENT
 
-#define MAX_ELEMENTS 250
-
 /* === ENUM STATES === */
 typedef enum {
     SOLID,
@@ -13,12 +11,12 @@ typedef enum {
 
 /* === STATES PROPERTIES === */
 typedef struct {
-    Mass *defaultPressure;
+    Mass defaultPressure;
     float flow;
 } GasProperties;
 
 typedef struct {
-    Mass *maxMass;
+    Mass maxMass;
     float liquidCompression;
     float speed;
     float minHorizontalFlow;
@@ -29,13 +27,13 @@ typedef struct {
     float strength;
     float hardness;
     int buildMenuSort;
-    char *refinedMetalTarget;
+    const char *refinedMetalTarget;
 } SolidProperties;
 
 
 /* === ELEMENT === */
-typedef struct Element {
-    char *elementId;
+struct Element {
+    const char *elementId;
 
     ElementState state;
 
@@ -47,20 +45,20 @@ typedef struct Element {
     float liquidSurfaceAreaMultiplier;
     float gasSurfaceAreaMultiplier;
 
-    Temperature *defaultTemperature;
-    Mass *defaultMass;
+    Temperature defaultTemperature;
+    Mass defaultMass;
 
-    Temperature *lowTemp;
-    Temperature *highTemp;
+    Temperature lowTemp;
+    Temperature highTemp;
 
-    char *lowTempTransitionTarget;
-    char *highTempTransitionTarget;
+    const char *lowTempTransitionTarget;
+    const char *highTempTransitionTarget;
 
-    char *lowTempTransitionOreId;
-    Mass *lowTempTransitionOreMassConversion;
+    const char *lowTempTransitionOreId;
+    Mass lowTempTransitionOreMassConversion;
 
-    char *highTempTransitionOreId;
-    Mass *highTempTransitionOreMassConversion;
+    const char *highTempTransitionOreId;
+    Mass highTempTransitionOreMassConversion;
 
     float molarMass;
     float toxicity;
@@ -71,38 +69,36 @@ typedef struct Element {
 
     /* Propriétés dépendantes de l'état */
     union {
-        GasProperties *gas;
-        LiquidProperties *liquid;
-        SolidProperties *solid;
+        GasProperties gas;
+        LiquidProperties liquid;
+        SolidProperties solid;
     };
 
     /* Commun mais optionnel */
-    char *sublimateId;
-    char *sublimateFx;
+    const char *sublimateId;
+    const char *sublimateFx;
     float sublimateEfficiency;
     float sublimateProbability;
     float offGasPercentage;
 
-    char *materialCategory;
+    const char *materialCategory;
 
     unsigned int tags[BITSET_SIZE];
     int tagCount;
 
     bool isDisabled;
 
-    char *localizationID;
-    char *dlcId;
-} Element;
+    const char *localizationID;
+    const char *dlcId;
+};
 
+typedef struct Element Element;
+typedef enum ElementId ElementId;
 
-int elements_init(void);
-void elements_free(void);
 void elements_show(void);
-const Element* element_get_by_id(const char *id);
-
-const Element* const* element_get_registry(void);
-int element_get_count(void);
 
 const char* element_state_to_string(ElementState state);
+
+ElementId element_get_index(const Element *e);
 
 #endif

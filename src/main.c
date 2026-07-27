@@ -2,8 +2,6 @@
 
 int main(void) {
 
-    int statut = EXIT_FAILURE;
-
     /*=== INIT SDL & GAME_WINDOW ===*/
     GameWindow *game_window = NULL;
 
@@ -19,10 +17,6 @@ int main(void) {
     /*=== INIT GAME ===*/
 
     srand(time(NULL));
-
-    tags_display_init();
-    mass_display_init();
-    temperature_display_init();
 
     element_texture_init(game_window);
 
@@ -57,9 +51,11 @@ int main(void) {
 
     /*=== GAME CLOSING ===*/
 
+    element_texture_destroy();
+
 Quit:
-    if (game_window->renderer != NULL) SDL_DestroyRenderer(game_window->renderer);
-    if (game_window->window != NULL) SDL_DestroyWindow(game_window->window);
+    if (map != NULL) map_free(map);
+    free_game_window(game_window);
     SDL_Quit();
-    return statut;
+    return 0;
 }

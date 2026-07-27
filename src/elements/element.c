@@ -30,8 +30,6 @@ void elements_show(void) {
 
 ElementId element_get_index(const Element *e) {
     if (e < ELEMENT_REGISTRY || e >= ELEMENT_REGISTRY + ELEMENT_ID_COUNT) {
-        // e is outside the bounds of the array!
-        fprintf(stderr, "ERROR: Element pointer %p is outside ELEMENT_REGISTRY bounds!\n", (void*)e);
         return ELEMENT_ID_COUNT;
     }
     return (ElementId)(e - ELEMENT_REGISTRY);

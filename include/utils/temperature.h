@@ -17,8 +17,6 @@ typedef struct {
     TemperatureUnit unit_enum;
 } TemperatureMapping;
 
-void temperature_display_init(void);
-
 void temperature_convert_to(Temperature *t, const TemperatureUnit target_unit);
 
 TemperatureUnit temperature_unit_from_string(const char *str);

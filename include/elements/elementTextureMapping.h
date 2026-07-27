@@ -9,6 +9,8 @@ typedef struct {
 } ElementTextureMapping;
 
 SDL_Texture *element_get_texture(ElementId element_index);
+
 void element_texture_init(GameWindow *game);
+void element_texture_destroy();
 
 #endif

@@ -26,5 +26,6 @@ struct GameWindow {
 typedef struct GameWindow GameWindow;
 
 GameWindow *create_game_window();
+void free_game_window(GameWindow *game_window);
 
 #endif

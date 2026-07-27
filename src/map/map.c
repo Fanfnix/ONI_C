@@ -13,11 +13,14 @@ Map *create_map(void) {
 
 
 void map_init(Map *map) {
-    MapGenerator *map_generator = (MapGenerator*)malloc(sizeof(MapGenerator));
-    if (map_generator != NULL) get_seed(&map_generator->seed);
+    uint64_t *seed = (uint64_t*)malloc(sizeof(uint64_t));
+    if (seed != NULL) {
+        get_seed(seed);
+        map->generator = (MapGenerator){seed};
+    }
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
-            map->grid[y][x] = generate_tile(map, map_generator, x, y);
+            map->grid[y][x] = generate_tile(map, map->generator, x, y);
         }
     }
 }
@@ -80,7 +83,7 @@ static void map_render_tiles(const Map *map, SDL_Renderer *renderer, int cameraX
                 continue;
             }
 
-            SDL_Color c = element_get_color(element_get_index(tile->item->element));
+            SDL_Color c = element_get_color(tile->item->element);
             SDL_Texture *tex = element_get_texture(element_get_index(tile->item->element));
             SDL_SetTextureColorMod(tex, c.r, c.g, c.b);
             SDL_RenderCopy(renderer, tex, NULL, &tile_rect);
@@ -96,4 +99,20 @@ void map_render(Map *map, GameWindow *game_window) {
     float zoom = game_window->zoom;
     map_render_checkerboard(renderer, cameraX, cameraY, zoom);
     map_render_tiles(map, renderer, cameraX, cameraY, zoom);
+}
+
+
+void map_free(Map *map) {
+    if (map != NULL) {
+        for (int y = 0; y < MAP_HEIGHT; y++) {
+            for (int x = 0; x < MAP_WIDTH; x++) {
+                if (map->grid[y][x] != NULL) {
+                    if (map->grid[y][x]->item != NULL) free(map->grid[y][x]->item);
+                    free(map->grid[y][x]);
+                }
+            }
+        }
+        free(map->generator.seed);
+        free(map);
+    }
 }

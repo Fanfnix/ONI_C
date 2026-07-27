@@ -8,28 +8,20 @@ static const MassMapping MASS_TABLE[] = {
     {NULL, MASS_KG}
 };
 
-static const char* MASS_NAMES[3];
-
-void mass_display_init(void) {
-    MASS_NAMES[MASS_KG] = "kg";
-    MASS_NAMES[MASS_G] = "g";
-    MASS_NAMES[MASS_MG] = "mg";
-}
-
 
 void mass_convert_to(Mass *m, const MassUnit target_unit) {
     if (m == NULL || m->unit == target_unit) return;
     if (m->unit == MASS_KG) {
-        if (target_unit == MASS_G) m->value = m->value * 10e3;
-        if (target_unit == MASS_MG) m->value = m->value * 10e6;
+        if (target_unit == MASS_G) m->value = m->value * 1e3;
+        if (target_unit == MASS_MG) m->value = m->value * 1e6;
     }
     else if (m->unit == MASS_G) {
-        if (target_unit == MASS_KG) m->value = m->value / 10e3;
-        if (target_unit == MASS_MG) m->value = m->value * 10e3;
+        if (target_unit == MASS_KG) m->value = m->value / 1e3;
+        if (target_unit == MASS_MG) m->value = m->value * 1e3;
     }
     else if (m->unit == MASS_MG) {
-        if (target_unit == MASS_KG) m->value = m->value / 10e6;
-        if (target_unit == MASS_G) m->value = m->value / 10e3;
+        if (target_unit == MASS_KG) m->value = m->value / 1e6;
+        if (target_unit == MASS_G) m->value = m->value / 1e3;
     }
     m->unit = target_unit;
 }
@@ -48,5 +40,5 @@ MassUnit mass_unit_from_string(const char *str) {
 
 const char* mass_unit_to_string(MassUnit unit) {
     if (unit < 0 || unit > MASS_MG) return "?";
-    return MASS_NAMES[unit];
+    return MASS_TABLE[unit].string_val;
 }

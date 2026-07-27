@@ -1,10 +1,12 @@
 /* Fichier généré automatiquement par generate_elements.py */
 /* Ne pas éditer à la main : modifier les .json puis régénérer. */
 #include "header.h"
+#include "./elements/elements_generated.h"
 
 const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     [ELEMENT_AEROGEL] = {
         .elementId = "Aerogel",
+        .color = { 230, 240, 245, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.0f,
         .thermalConductivity = 0.003f,
@@ -46,6 +48,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ALGAE] = {
         .elementId = "Algae",
+        .color = { 60, 140, 60, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 2.0f,
@@ -87,6 +90,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ALUMINUM] = {
         .elementId = "Aluminum",
+        .color = { 211, 214, 218, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.91f,
         .thermalConductivity = 205.0f,
@@ -128,6 +132,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ALUMINUMORE] = {
         .elementId = "AluminumOre",
+        .color = { 160, 160, 165, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.91f,
         .thermalConductivity = 20.5f,
@@ -169,6 +174,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_BITUMEN] = {
         .elementId = "Bitumen",
+        .color = { 40, 30, 25, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.76f,
         .thermalConductivity = 0.17f,
@@ -210,6 +216,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_BLEACHSTONE] = {
         .elementId = "BleachStone",
+        .color = { 230, 225, 190, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.5f,
         .thermalConductivity = 4.0f,
@@ -251,6 +258,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_BRICK] = {
         .elementId = "Brick",
+        .color = { 178, 90, 60, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.84f,
         .thermalConductivity = 0.62f,
@@ -292,6 +300,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_BRINEICE] = {
         .elementId = "BrineIce",
+        .color = { 200, 220, 225, 255 },
         .state = SOLID,
         .specificHeatCapacity = 3.4f,
         .thermalConductivity = 2.18f,
@@ -333,6 +342,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MURKYBRINEICE] = {
         .elementId = "MurkyBrineIce",
+        .color = { 150, 165, 160, 255 },
         .state = SOLID,
         .specificHeatCapacity = 3.6f,
         .thermalConductivity = 2.18f,
@@ -374,6 +384,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CARBON] = {
         .elementId = "Carbon",
+        .color = { 30, 30, 30, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.71f,
         .thermalConductivity = 1.25f,
@@ -415,6 +426,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PEAT] = {
         .elementId = "Peat",
+        .color = { 70, 50, 35, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.71f,
         .thermalConductivity = 0.6f,
@@ -456,6 +468,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CARBONFIBRE] = {
         .elementId = "CarbonFibre",
+        .color = { 50, 50, 55, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.52f,
         .thermalConductivity = 0.0f,
@@ -497,6 +510,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CEMENT] = {
         .elementId = "Cement",
+        .color = { 180, 178, 170, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.55f,
         .thermalConductivity = 8.0f,
@@ -538,6 +552,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CEMENTMIX] = {
         .elementId = "CementMix",
+        .color = { 150, 148, 140, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.52f,
         .thermalConductivity = 8.0f,
@@ -579,6 +594,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CERAMIC] = {
         .elementId = "Ceramic",
+        .color = { 200, 165, 130, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.84f,
         .thermalConductivity = 0.62f,
@@ -620,6 +636,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CLAY] = {
         .elementId = "Clay",
+        .color = { 170, 120, 90, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.92f,
         .thermalConductivity = 2.0f,
@@ -661,6 +678,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_COPPER] = {
         .elementId = "Copper",
+        .color = { 184, 115, 51, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.385f,
         .thermalConductivity = 60.0f,
@@ -702,6 +720,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CREATURE] = {
         .elementId = "Creature",
+        .color = { 200, 150, 140, 255 },
         .state = SOLID,
         .specificHeatCapacity = 3.47f,
         .thermalConductivity = 0.6f,
@@ -743,6 +762,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CRUSHEDICE] = {
         .elementId = "CrushedIce",
+        .color = { 210, 230, 235, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.05f,
         .thermalConductivity = 2.18f,
@@ -784,6 +804,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CRUSHEDROCK] = {
         .elementId = "CrushedRock",
+        .color = { 130, 125, 120, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 2.0f,
@@ -825,6 +846,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CUPRITE] = {
         .elementId = "Cuprite",
+        .color = { 150, 70, 50, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.386f,
         .thermalConductivity = 4.5f,
@@ -866,6 +888,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_DIAMOND] = {
         .elementId = "Diamond",
+        .color = { 240, 248, 255, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.516f,
         .thermalConductivity = 80.0f,
@@ -907,6 +930,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_DIRT] = {
         .elementId = "Dirt",
+        .color = { 110, 80, 55, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.48f,
         .thermalConductivity = 2.0f,
@@ -948,6 +972,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_DIRTYICE] = {
         .elementId = "DirtyIce",
+        .color = { 180, 190, 190, 255 },
         .state = SOLID,
         .specificHeatCapacity = 3.05f,
         .thermalConductivity = 1.0f,
@@ -989,6 +1014,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_FERTILIZER] = {
         .elementId = "Fertilizer",
+        .color = { 90, 80, 40, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.83f,
         .thermalConductivity = 2.0f,
@@ -1030,6 +1056,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_FOOLSGOLD] = {
         .elementId = "FoolsGold",
+        .color = { 200, 170, 60, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.386f,
         .thermalConductivity = 4.5f,
@@ -1071,6 +1098,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_FOSSIL] = {
         .elementId = "Fossil",
+        .color = { 140, 110, 85, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.91f,
         .thermalConductivity = 2.0f,
@@ -1112,6 +1140,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_FULLERENE] = {
         .elementId = "Fullerene",
+        .color = { 60, 60, 70, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.95f,
         .thermalConductivity = 50.0f,
@@ -1153,6 +1182,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_GLASS] = {
         .elementId = "Glass",
+        .color = { 200, 230, 230, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.84f,
         .thermalConductivity = 1.11f,
@@ -1194,6 +1224,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_GOLD] = {
         .elementId = "Gold",
+        .color = { 255, 215, 0, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.129f,
         .thermalConductivity = 60.0f,
@@ -1235,6 +1266,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_GOLDAMALGAM] = {
         .elementId = "GoldAmalgam",
+        .color = { 190, 175, 120, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.15f,
         .thermalConductivity = 2.0f,
@@ -1276,6 +1308,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_GRANITE] = {
         .elementId = "Granite",
+        .color = { 193, 154, 150, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.79f,
         .thermalConductivity = 3.39f,
@@ -1317,6 +1350,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ICE] = {
         .elementId = "Ice",
+        .color = { 190, 220, 230, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.05f,
         .thermalConductivity = 2.18f,
@@ -1358,6 +1392,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_IGNEOUSROCK] = {
         .elementId = "IgneousRock",
+        .color = { 105, 100, 95, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.0f,
         .thermalConductivity = 2.0f,
@@ -1399,6 +1434,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_IRON] = {
         .elementId = "Iron",
+        .color = { 160, 160, 160, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.449f,
         .thermalConductivity = 55.0f,
@@ -1440,6 +1476,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_IRONORE] = {
         .elementId = "IronOre",
+        .color = { 140, 90, 70, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.449f,
         .thermalConductivity = 4.0f,
@@ -1481,6 +1518,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LEAD] = {
         .elementId = "Lead",
+        .color = { 90, 90, 95, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.128f,
         .thermalConductivity = 35.0f,
@@ -1522,6 +1560,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIME] = {
         .elementId = "Lime",
+        .color = { 235, 235, 225, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.834f,
         .thermalConductivity = 2.0f,
@@ -1563,6 +1602,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MAFICROCK] = {
         .elementId = "MaficRock",
+        .color = { 70, 65, 75, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 1.0f,
@@ -1604,6 +1644,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_NIOBIUM] = {
         .elementId = "Niobium",
+        .color = { 170, 180, 190, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.265f,
         .thermalConductivity = 54.0f,
@@ -1645,6 +1686,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CORIUM] = {
         .elementId = "Corium",
+        .color = { 80, 60, 50, 255 },
         .state = SOLID,
         .specificHeatCapacity = 7.44f,
         .thermalConductivity = 6.0f,
@@ -1686,6 +1728,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_OBSIDIAN] = {
         .elementId = "Obsidian",
+        .color = { 35, 30, 40, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 2.0f,
@@ -1727,6 +1770,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_OXYROCK] = {
         .elementId = "OxyRock",
+        .color = { 180, 210, 190, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.0f,
         .thermalConductivity = 4.0f,
@@ -1768,6 +1812,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PHOSPHATENODULES] = {
         .elementId = "PhosphateNodules",
+        .color = { 190, 170, 130, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.15f,
         .thermalConductivity = 2.0f,
@@ -1809,6 +1854,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PHOSPHORITE] = {
         .elementId = "Phosphorite",
+        .color = { 170, 150, 100, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.15f,
         .thermalConductivity = 2.0f,
@@ -1850,6 +1896,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PHOSPHORUS] = {
         .elementId = "Phosphorus",
+        .color = { 220, 210, 150, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.7697f,
         .thermalConductivity = 0.236f,
@@ -1891,6 +1938,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_REFINEDCARBON] = {
         .elementId = "RefinedCarbon",
+        .color = { 45, 45, 45, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.74f,
         .thermalConductivity = 3.1f,
@@ -1932,6 +1980,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_REGOLITH] = {
         .elementId = "Regolith",
+        .color = { 155, 150, 140, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 1.0f,
@@ -1973,6 +2022,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_RUST] = {
         .elementId = "Rust",
+        .color = { 150, 80, 50, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.449f,
         .thermalConductivity = 4.0f,
@@ -2014,6 +2064,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SALT] = {
         .elementId = "Salt",
+        .color = { 245, 245, 240, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.7f,
         .thermalConductivity = 0.444f,
@@ -2055,6 +2106,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SAND] = {
         .elementId = "Sand",
+        .color = { 225, 205, 155, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.83f,
         .thermalConductivity = 2.0f,
@@ -2096,6 +2148,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SANDCEMENT] = {
         .elementId = "SandCement",
+        .color = { 195, 180, 155, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.5f,
         .thermalConductivity = 8.0f,
@@ -2137,6 +2190,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SANDSTONE] = {
         .elementId = "SandStone",
+        .color = { 224, 196, 145, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.8f,
         .thermalConductivity = 2.9f,
@@ -2178,6 +2232,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SEDIMENTARYROCK] = {
         .elementId = "SedimentaryRock",
+        .color = { 165, 145, 120, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 2.0f,
@@ -2219,6 +2274,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SHALE] = {
         .elementId = "Shale",
+        .color = { 90, 90, 100, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.25f,
         .thermalConductivity = 1.8f,
@@ -2260,6 +2316,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SLABS] = {
         .elementId = "Slabs",
+        .color = { 170, 165, 160, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.52f,
         .thermalConductivity = 8.0f,
@@ -2301,6 +2358,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SLIMEMOLD] = {
         .elementId = "SlimeMold",
+        .color = { 110, 140, 60, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 2.0f,
@@ -2342,6 +2400,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SNOW] = {
         .elementId = "Snow",
+        .color = { 250, 250, 255, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.05f,
         .thermalConductivity = 0.545f,
@@ -2383,6 +2442,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_STABLESNOW] = {
         .elementId = "StableSnow",
+        .color = { 235, 240, 245, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.05f,
         .thermalConductivity = 0.545f,
@@ -2424,6 +2484,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDCARBONDIOXIDE] = {
         .elementId = "SolidCarbonDioxide",
+        .color = { 225, 240, 245, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.846f,
         .thermalConductivity = 1.46f,
@@ -2465,6 +2526,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDCHLORINE] = {
         .elementId = "SolidChlorine",
+        .color = { 200, 225, 180, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.48f,
         .thermalConductivity = 0.75f,
@@ -2506,6 +2568,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDCRUDEOIL] = {
         .elementId = "SolidCrudeOil",
+        .color = { 35, 25, 20, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.69f,
         .thermalConductivity = 2.0f,
@@ -2547,6 +2610,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDHYDROGEN] = {
         .elementId = "SolidHydrogen",
+        .color = { 225, 235, 245, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.4f,
         .thermalConductivity = 1.0f,
@@ -2588,6 +2652,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDMERCURY] = {
         .elementId = "SolidMercury",
+        .color = { 200, 200, 205, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.14f,
         .thermalConductivity = 8.3f,
@@ -2629,6 +2694,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDMETHANE] = {
         .elementId = "SolidMethane",
+        .color = { 215, 230, 235, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.191f,
         .thermalConductivity = 0.03f,
@@ -2670,6 +2736,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDNAPHTHA] = {
         .elementId = "SolidNaphtha",
+        .color = { 180, 140, 70, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.191f,
         .thermalConductivity = 0.2f,
@@ -2711,6 +2778,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDOXYGEN] = {
         .elementId = "SolidOxygen",
+        .color = { 200, 220, 240, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.01f,
         .thermalConductivity = 1.0f,
@@ -2752,6 +2820,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDPETROLEUM] = {
         .elementId = "SolidPetroleum",
+        .color = { 60, 45, 30, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.76f,
         .thermalConductivity = 2.0f,
@@ -2793,6 +2862,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDPROPANE] = {
         .elementId = "SolidPropane",
+        .color = { 225, 220, 180, 255 },
         .state = SOLID,
         .specificHeatCapacity = 2.4f,
         .thermalConductivity = 1.0f,
@@ -2834,6 +2904,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDRESIN] = {
         .elementId = "SolidResin",
+        .color = { 170, 110, 40, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.3f,
         .thermalConductivity = 0.17f,
@@ -2875,6 +2946,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDSUPERCOOLANT] = {
         .elementId = "SolidSuperCoolant",
+        .color = { 130, 220, 220, 255 },
         .state = SOLID,
         .specificHeatCapacity = 8.44f,
         .thermalConductivity = 9.46f,
@@ -2916,6 +2988,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOLIDVISCOGEL] = {
         .elementId = "SolidViscoGel",
+        .color = { 190, 140, 190, 255 },
         .state = SOLID,
         .specificHeatCapacity = 1.55f,
         .thermalConductivity = 0.45f,
@@ -2957,6 +3030,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_STEEL] = {
         .elementId = "Steel",
+        .color = { 150, 155, 160, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.49f,
         .thermalConductivity = 54.0f,
@@ -2998,6 +3072,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SULFUR] = {
         .elementId = "Sulfur",
+        .color = { 220, 200, 50, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.7f,
         .thermalConductivity = 0.2f,
@@ -3039,6 +3114,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SUPERINSULATOR] = {
         .elementId = "SuperInsulator",
+        .color = { 90, 80, 100, 255 },
         .state = SOLID,
         .specificHeatCapacity = 5.57f,
         .thermalConductivity = 1e-05f,
@@ -3080,6 +3156,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_TEMPCONDUCTORSOLID] = {
         .elementId = "TempConductorSolid",
+        .color = { 200, 140, 90, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.622f,
         .thermalConductivity = 220.0f,
@@ -3121,6 +3198,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_TOXICSAND] = {
         .elementId = "ToxicSand",
+        .color = { 170, 180, 90, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.83f,
         .thermalConductivity = 2.0f,
@@ -3162,6 +3240,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_TUNGSTEN] = {
         .elementId = "Tungsten",
+        .color = { 110, 110, 115, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.134f,
         .thermalConductivity = 60.0f,
@@ -3203,6 +3282,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_UNOBTANIUM] = {
         .elementId = "Unobtanium",
+        .color = { 150, 80, 200, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,
@@ -3244,6 +3324,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_WOLFRAMITE] = {
         .elementId = "Wolframite",
+        .color = { 70, 55, 45, 255 },
         .state = SOLID,
         .specificHeatCapacity = 0.134f,
         .thermalConductivity = 15.0f,
@@ -3285,6 +3366,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_BRINE] = {
         .elementId = "Brine",
+        .color = { 130, 160, 150, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 3.4f,
         .thermalConductivity = 0.609f,
@@ -3327,6 +3409,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CHLORINE] = {
         .elementId = "Chlorine",
+        .color = { 200, 220, 120, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.48f,
         .thermalConductivity = 0.0081f,
@@ -3369,6 +3452,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CRUDEOIL] = {
         .elementId = "CrudeOil",
+        .color = { 20, 15, 10, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 1.69f,
         .thermalConductivity = 2.0f,
@@ -3411,6 +3495,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_DIRTYWATER] = {
         .elementId = "DirtyWater",
+        .color = { 110, 120, 90, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 4.179f,
         .thermalConductivity = 0.58f,
@@ -3453,6 +3538,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDCARBONDIOXIDE] = {
         .elementId = "LiquidCarbonDioxide",
+        .color = { 190, 220, 230, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.846f,
         .thermalConductivity = 1.46f,
@@ -3495,6 +3581,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDHELIUM] = {
         .elementId = "LiquidHelium",
+        .color = { 210, 230, 240, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 0.236f,
@@ -3537,6 +3624,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDHYDROGEN] = {
         .elementId = "LiquidHydrogen",
+        .color = { 200, 220, 240, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 2.4f,
         .thermalConductivity = 0.1f,
@@ -3579,6 +3667,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDMETHANE] = {
         .elementId = "LiquidMethane",
+        .color = { 180, 220, 220, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 2.191f,
         .thermalConductivity = 0.03f,
@@ -3621,6 +3710,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDOXYGEN] = {
         .elementId = "LiquidOxygen",
+        .color = { 150, 190, 230, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 1.01f,
         .thermalConductivity = 2.0f,
@@ -3663,6 +3753,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDPHOSPHORUS] = {
         .elementId = "LiquidPhosphorus",
+        .color = { 210, 200, 140, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.7697f,
         .thermalConductivity = 0.236f,
@@ -3705,6 +3796,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDPROPANE] = {
         .elementId = "LiquidPropane",
+        .color = { 220, 210, 160, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 2.4f,
         .thermalConductivity = 0.1f,
@@ -3747,6 +3839,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LIQUIDSULFUR] = {
         .elementId = "LiquidSulfur",
+        .color = { 180, 160, 40, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.7f,
         .thermalConductivity = 0.2f,
@@ -3789,6 +3882,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MAGMA] = {
         .elementId = "Magma",
+        .color = { 230, 90, 30, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 1.0f,
         .thermalConductivity = 1.0f,
@@ -3831,6 +3925,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MERCURY] = {
         .elementId = "Mercury",
+        .color = { 195, 195, 200, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.14f,
         .thermalConductivity = 8.3f,
@@ -3873,6 +3968,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENALUMINUM] = {
         .elementId = "MoltenAluminum",
+        .color = { 220, 200, 190, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.91f,
         .thermalConductivity = 20.5f,
@@ -3915,6 +4011,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENCARBON] = {
         .elementId = "MoltenCarbon",
+        .color = { 90, 40, 30, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.71f,
         .thermalConductivity = 2.0f,
@@ -3957,6 +4054,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENCOPPER] = {
         .elementId = "MoltenCopper",
+        .color = { 200, 100, 50, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.386f,
         .thermalConductivity = 12.0f,
@@ -3999,6 +4097,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENGLASS] = {
         .elementId = "MoltenGlass",
+        .color = { 220, 150, 100, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.2f,
         .thermalConductivity = 1.0f,
@@ -4041,6 +4140,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENGOLD] = {
         .elementId = "MoltenGold",
+        .color = { 255, 190, 60, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.1291f,
         .thermalConductivity = 6.0f,
@@ -4083,6 +4183,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENIRON] = {
         .elementId = "MoltenIron",
+        .color = { 210, 110, 40, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.449f,
         .thermalConductivity = 4.0f,
@@ -4125,6 +4226,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENCOBALT] = {
         .elementId = "MoltenCobalt",
+        .color = { 180, 120, 90, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.42f,
         .thermalConductivity = 4.0f,
@@ -4167,6 +4269,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENLEAD] = {
         .elementId = "MoltenLead",
+        .color = { 140, 110, 100, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.128f,
         .thermalConductivity = 11.0f,
@@ -4209,6 +4312,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENNIOBIUM] = {
         .elementId = "MoltenNiobium",
+        .color = { 190, 140, 110, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.265f,
         .thermalConductivity = 54.0f,
@@ -4251,6 +4355,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENSALT] = {
         .elementId = "MoltenSalt",
+        .color = { 230, 190, 150, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.7f,
         .thermalConductivity = 0.444f,
@@ -4293,6 +4398,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENSTEEL] = {
         .elementId = "MoltenSteel",
+        .color = { 220, 130, 50, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.386f,
         .thermalConductivity = 80.0f,
@@ -4335,6 +4441,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MOLTENTUNGSTEN] = {
         .elementId = "MoltenTungsten",
+        .color = { 200, 100, 40, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.134f,
         .thermalConductivity = 4.0f,
@@ -4377,6 +4484,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_NAPHTHA] = {
         .elementId = "Naphtha",
+        .color = { 190, 150, 80, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 2.191f,
         .thermalConductivity = 0.2f,
@@ -4419,6 +4527,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PETROLEUM] = {
         .elementId = "Petroleum",
+        .color = { 70, 50, 30, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 1.76f,
         .thermalConductivity = 2.0f,
@@ -4461,6 +4570,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_RESIN] = {
         .elementId = "Resin",
+        .color = { 180, 120, 50, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 1.11f,
         .thermalConductivity = 0.15f,
@@ -4503,6 +4613,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SALTWATER] = {
         .elementId = "SaltWater",
+        .color = { 120, 160, 170, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 4.1f,
         .thermalConductivity = 0.609f,
@@ -4545,6 +4656,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SUPERCOOLANT] = {
         .elementId = "SuperCoolant",
+        .color = { 80, 210, 220, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 8.44f,
         .thermalConductivity = 9.46f,
@@ -4587,6 +4699,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_VISCOGEL] = {
         .elementId = "ViscoGel",
+        .color = { 200, 130, 190, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 1.55f,
         .thermalConductivity = 0.45f,
@@ -4629,6 +4742,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_WATER] = {
         .elementId = "Water",
+        .color = { 90, 160, 220, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 4.179f,
         .thermalConductivity = 0.609f,
@@ -4671,6 +4785,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ETHANOL] = {
         .elementId = "Ethanol",
+        .color = { 210, 230, 235, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 2.46f,
         .thermalConductivity = 0.171f,
@@ -4713,6 +4828,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PHYTOOIL] = {
         .elementId = "PhytoOil",
+        .color = { 170, 190, 80, 255 },
         .state = LIQUID,
         .specificHeatCapacity = 0.9f,
         .thermalConductivity = 2.0f,
@@ -4755,6 +4871,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ALUMINUMGAS] = {
         .elementId = "AluminumGas",
+        .color = { 210, 210, 215, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.91f,
         .thermalConductivity = 2.5f,
@@ -4794,6 +4911,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CARBONDIOXIDE] = {
         .elementId = "CarbonDioxide",
+        .color = { 190, 190, 195, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.846f,
         .thermalConductivity = 0.0146f,
@@ -4833,6 +4951,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CARBONGAS] = {
         .elementId = "CarbonGas",
+        .color = { 80, 80, 80, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.71f,
         .thermalConductivity = 1.7f,
@@ -4872,6 +4991,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CHLORINEGAS] = {
         .elementId = "ChlorineGas",
+        .color = { 200, 225, 140, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.48f,
         .thermalConductivity = 0.0081f,
@@ -4911,6 +5031,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_CONTAMINATEDOXYGEN] = {
         .elementId = "ContaminatedOxygen",
+        .color = { 170, 190, 150, 255 },
         .state = GAS,
         .specificHeatCapacity = 1.01f,
         .thermalConductivity = 0.024f,
@@ -4950,6 +5071,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_COPPERGAS] = {
         .elementId = "CopperGas",
+        .color = { 200, 140, 110, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.386f,
         .thermalConductivity = 1.0f,
@@ -4989,6 +5111,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_GOLDGAS] = {
         .elementId = "GoldGas",
+        .color = { 230, 200, 120, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.1291f,
         .thermalConductivity = 1.0f,
@@ -5028,6 +5151,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_HYDROGEN] = {
         .elementId = "Hydrogen",
+        .color = { 220, 230, 240, 255 },
         .state = GAS,
         .specificHeatCapacity = 2.4f,
         .thermalConductivity = 0.168f,
@@ -5067,6 +5191,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_IRONGAS] = {
         .elementId = "IronGas",
+        .color = { 180, 150, 140, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.449f,
         .thermalConductivity = 1.0f,
@@ -5106,6 +5231,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_COBALTGAS] = {
         .elementId = "CobaltGas",
+        .color = { 150, 170, 200, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.42f,
         .thermalConductivity = 1.0f,
@@ -5145,6 +5271,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_LEADGAS] = {
         .elementId = "LeadGas",
+        .color = { 160, 155, 160, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.128f,
         .thermalConductivity = 3.5f,
@@ -5184,6 +5311,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_MERCURYGAS] = {
         .elementId = "MercuryGas",
+        .color = { 195, 195, 190, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.14f,
         .thermalConductivity = 8.3f,
@@ -5223,6 +5351,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_METHANE] = {
         .elementId = "Methane",
+        .color = { 200, 210, 180, 255 },
         .state = GAS,
         .specificHeatCapacity = 2.191f,
         .thermalConductivity = 0.035f,
@@ -5262,6 +5391,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_NIOBIUMGAS] = {
         .elementId = "NiobiumGas",
+        .color = { 180, 190, 200, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.265f,
         .thermalConductivity = 1.0f,
@@ -5301,6 +5431,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_OXYGEN] = {
         .elementId = "Oxygen",
+        .color = { 150, 200, 240, 255 },
         .state = GAS,
         .specificHeatCapacity = 1.005f,
         .thermalConductivity = 0.024f,
@@ -5340,6 +5471,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PHOSPHORUSGAS] = {
         .elementId = "PhosphorusGas",
+        .color = { 220, 210, 160, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.7697f,
         .thermalConductivity = 0.236f,
@@ -5379,6 +5511,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_PROPANE] = {
         .elementId = "Propane",
+        .color = { 215, 205, 170, 255 },
         .state = GAS,
         .specificHeatCapacity = 2.4f,
         .thermalConductivity = 0.015f,
@@ -5418,6 +5551,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ROCKGAS] = {
         .elementId = "RockGas",
+        .color = { 170, 160, 150, 255 },
         .state = GAS,
         .specificHeatCapacity = 1.0f,
         .thermalConductivity = 0.1f,
@@ -5457,6 +5591,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SALTGAS] = {
         .elementId = "SaltGas",
+        .color = { 225, 220, 210, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.88f,
         .thermalConductivity = 0.444f,
@@ -5496,6 +5631,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SOURGAS] = {
         .elementId = "SourGas",
+        .color = { 180, 180, 140, 255 },
         .state = GAS,
         .specificHeatCapacity = 1.898f,
         .thermalConductivity = 0.018f,
@@ -5535,6 +5671,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_STEAM] = {
         .elementId = "Steam",
+        .color = { 230, 235, 240, 255 },
         .state = GAS,
         .specificHeatCapacity = 4.179f,
         .thermalConductivity = 0.184f,
@@ -5574,6 +5711,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_STEELGAS] = {
         .elementId = "SteelGas",
+        .color = { 190, 180, 170, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.49f,
         .thermalConductivity = 1.0f,
@@ -5613,6 +5751,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SULFURGAS] = {
         .elementId = "SulfurGas",
+        .color = { 210, 200, 90, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.7f,
         .thermalConductivity = 0.2f,
@@ -5652,6 +5791,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_SUPERCOOLANTGAS] = {
         .elementId = "SuperCoolantGas",
+        .color = { 150, 225, 225, 255 },
         .state = GAS,
         .specificHeatCapacity = 8.44f,
         .thermalConductivity = 1.2f,
@@ -5691,6 +5831,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_TUNGSTENGAS] = {
         .elementId = "TungstenGas",
+        .color = { 170, 170, 175, 255 },
         .state = GAS,
         .specificHeatCapacity = 0.134f,
         .thermalConductivity = 1.0f,
@@ -5730,6 +5871,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_ETHANOLGAS] = {
         .elementId = "EthanolGas",
+        .color = { 215, 225, 230, 255 },
         .state = GAS,
         .specificHeatCapacity = 2.148f,
         .thermalConductivity = 0.167f,
@@ -5769,6 +5911,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_VACUUM] = {
         .elementId = "Vacuum",
+        .color = { 0, 0, 0, 0 },
         .state = VACUUM,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,
@@ -5804,6 +5947,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_VOID] = {
         .elementId = "Void",
+        .color = { 0, 0, 0, 0 },
         .state = VACUUM,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,
@@ -5839,6 +5983,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_COMPOSITION] = {
         .elementId = "COMPOSITION",
+        .color = { 255, 255, 255, 255 },
         .state = VACUUM,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,

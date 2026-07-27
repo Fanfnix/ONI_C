@@ -10,13 +10,13 @@ static uint64_t splitmix64_next(uint64_t *state) {
 
 
 void get_seed(uint64_t *seed) {
-    splitmix64_next(seed);
+    *seed = splitmix64_next(seed);
 }
 
 
 Tile *create_random_tile() {
     int element_index = rand() % ELEMENT_ID_COUNT;
-    const Element *element = &ELEMENT_REGISTRY[element_index];
+    const Element *element = ELEMENT_REGISTRY + element_index;
 
     Mass mass = {element->defaultMass.value, element->defaultMass.unit};
     Temperature temperature = {20.0, TEMPERATURE_C};
@@ -25,6 +25,6 @@ Tile *create_random_tile() {
 }
 
 
-Tile *generate_tile(Map *map, MapGenerator *map_generator, int x, int y) {
+Tile *generate_tile(Map *map, MapGenerator map_generator, int x, int y) {
     return create_random_tile();
 }

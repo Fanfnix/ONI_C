@@ -55,8 +55,6 @@ typedef struct {
     ElementTag tag_enum;
 } TagMapping;
 
-void tags_display_init(void);
-
 int element_has_tag(const Element e, const ElementTag tag);
 
 ElementTag tag_from_string(const char *str);

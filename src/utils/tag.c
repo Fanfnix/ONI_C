@@ -48,18 +48,6 @@ static const TagMapping TAG_TABLE[] = {
     {NULL, TAG_NONE}
 };
 
-static const char* TAG_NAMES[TAG_MAX_COUNT];
-
-void tags_display_init(void) {
-    for (int i = 0; i < TAG_MAX_COUNT; i++) TAG_NAMES[i] = "Unknown";
-    for (int i = 0; TAG_TABLE[i].string_val != NULL; i++) {
-        ElementTag tag_enum = TAG_TABLE[i].tag_enum;
-        if (tag_enum >= 0 && tag_enum < TAG_MAX_COUNT) {
-            TAG_NAMES[tag_enum] = TAG_TABLE[i].string_val;
-        }
-    }
-}
-
 
 int element_has_tag(const Element e, const ElementTag tag) {
     return (e.tags[tag / 32] & (1U << (tag % 32))) != 0;
@@ -83,5 +71,5 @@ ElementTag tag_from_string(const char *str) {
 
 const char* tag_to_string(ElementTag tag) {
     if (tag < 0 || tag >= TAG_MAX_COUNT) return "Unknown";
-    return TAG_NAMES[tag];
+    return TAG_TABLE[tag].string_val;
 }

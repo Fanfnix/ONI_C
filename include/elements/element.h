@@ -37,6 +37,8 @@ struct Element {
 
     ElementState state;
 
+    SDL_Color color;
+
     /* Commun à tous les éléments */
     float specificHeatCapacity;
     float thermalConductivity;

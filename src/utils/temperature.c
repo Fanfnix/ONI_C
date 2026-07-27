@@ -10,14 +10,6 @@ static const TemperatureMapping TEMP_TABLE[] = {
     {NULL, TEMPERATURE_C}
 };
 
-static const char* TEMPERATURE_NAMES[3];
-
-void temperature_display_init(void) {
-    TEMPERATURE_NAMES[TEMPERATURE_C] = "°C";
-    TEMPERATURE_NAMES[TEMPERATURE_F] = "°F";
-    TEMPERATURE_NAMES[TEMPERATURE_K] = "K";
-}
-
 
 void temperature_convert_to(Temperature *t, const TemperatureUnit target_unit) {
     if (t == NULL || t->unit == target_unit) return;
@@ -51,5 +43,5 @@ TemperatureUnit temperature_unit_from_string(const char *str) {
 
 const char* temperature_unit_to_string(TemperatureUnit unit) {
     if (unit < 0 || unit > TEMPERATURE_K) return "?";
-    return TEMPERATURE_NAMES[unit];
+    return TEMP_TABLE[unit].string_val;
 }

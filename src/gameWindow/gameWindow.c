@@ -55,3 +55,12 @@ GameWindow *create_game_window() {
 
     return game_window;
 }
+
+
+void free_game_window(GameWindow *game_window) {
+    if (game_window != NULL) {
+        if (game_window->renderer != NULL) SDL_DestroyRenderer(game_window->renderer);
+        if (game_window->window != NULL) SDL_DestroyWindow(game_window->window);
+        free(game_window);
+    }
+}

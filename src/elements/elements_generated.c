@@ -5911,7 +5911,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_VACUUM] = {
         .elementId = "Vacuum",
-        .color = { 0, 0, 0, 0 },
+        .color = TRANSPARENT_COLOR,
         .state = VACUUM,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,
@@ -5947,7 +5947,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_VOID] = {
         .elementId = "Void",
-        .color = { 0, 0, 0, 0 },
+        .color = TRANSPARENT_COLOR,
         .state = VACUUM,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,

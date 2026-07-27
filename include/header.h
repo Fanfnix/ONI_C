@@ -3,6 +3,8 @@
 
 #define BITSET_SIZE (TAG_MAX_COUNT / 32)
 
+#define TRANSPARENT_COLOR {255, 0, 255, 255}
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

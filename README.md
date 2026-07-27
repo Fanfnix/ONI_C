@@ -75,3 +75,4 @@ gcc -fopenmp -Iinclude $(find src -name "*.c") -o oni $(sdl2-config --cflags --l
 ## Génération des éléments
 
 Les fichiers `elements_generated.h` et `elements_generated.c` sont **générés automatiquement** par un script `generate_elements.py` à partir de définitions `.json`. Ils ne doivent **pas être édités à la main** : toute modification doit passer par les fichiers JSON source puis une régénération.
+Pour des raisons de license du jeu **Oxygen Not Included** et conformémént aux conditions d'utilisations établies par la société **Klei Entertainement**, les fichiers `.json` dérivés des `.yaml` du jeu **Oxygen Not Included** ainsi que le script `generate_elements.py` ne sont pas disponibles. Vous avez cependant le fichier `elements_generated.c`. Modification à vos risques et périls...

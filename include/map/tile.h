@@ -2,11 +2,11 @@
 #define TILE
 
 typedef struct {
-    const Item *item;
+    Item *item;
 } Tile;
 
-Tile *create_tile_from_item(const Item *item);
-Tile *create_tile_from_element(const Element* element, Mass mass, Temperature temperature);
+Tile *create_tile_from_item(Item *item);
+Tile *create_tile_from_element(Element* element, Mass mass, Temperature temperature);
 Tile *create_tile_from_element_id(ElementId element_index, Mass mass, Temperature temperature);
 
 #endif

@@ -1,7 +1,7 @@
 #include <header.h>
 
 
-Item* create_item_from_element(const Element* element, Mass mass, Temperature temperature) {
+Item* create_item_from_element(Element* element, Mass mass, Temperature temperature) {
     Item *item = (Item*)malloc(sizeof(Item));
     item->element = element;
     item->mass = mass;

@@ -15,6 +15,7 @@ Map *create_map(void) {
 void map_init(Map *map) {
     uint64_t *seed = (uint64_t*)malloc(sizeof(uint64_t));
     if (seed != NULL) {
+        *seed = (uint64_t)time(NULL);
         get_seed(seed);
         map->generator = (MapGenerator){seed};
     }

@@ -23,6 +23,7 @@
 #include "item.h"
 
 #include "map/tile.h"
+#include "map/backwall.h"
 #include "map/mapGeneration.h"
 #include "map/map.h"
 
@@ -31,5 +32,6 @@
 
 #include "elements/elementColorMapping.h"
 #include "elements/elementTextureMapping.h"
+#include "map/backwallTextureMapping.h"
 
 #endif

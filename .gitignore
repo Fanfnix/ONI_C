@@ -2,6 +2,7 @@
 *.yaml
 *.json
 *.py
+*.webp
 
 *.o
 *.d

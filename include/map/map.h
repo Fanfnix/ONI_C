@@ -13,6 +13,7 @@ typedef struct GameWindow GameWindow;
 struct Map {
     MapGenerator generator;
     Tile *grid[MAP_HEIGHT][MAP_WIDTH];
+    BackWallTile *backwall[MAP_HEIGHT][MAP_WIDTH];
 };
 
 typedef struct Map Map;

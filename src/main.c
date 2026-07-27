@@ -19,6 +19,7 @@ int main(void) {
     srand(time(NULL));
 
     element_texture_init(game_window);
+    backwall_texture_init(game_window);
 
     Map *map = create_map();
 
@@ -52,6 +53,7 @@ int main(void) {
     /*=== GAME CLOSING ===*/
 
     element_texture_destroy();
+    backwall_texture_destroy();
 
 Quit:
     if (map != NULL) map_free(map);

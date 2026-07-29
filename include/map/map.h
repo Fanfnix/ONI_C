@@ -4,7 +4,7 @@
 #define MAP_WIDTH 256   // 256
 #define MAP_HEIGHT 385  // 385
 
-#define TILE_SIZE 64
+#define TILE_SIZE 128
 #define CAMERA_SPEED (TILE_SIZE * 3 / 5)
 
 typedef struct MapGenerator MapGenerator;

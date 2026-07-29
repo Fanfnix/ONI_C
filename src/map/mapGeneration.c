@@ -22,7 +22,7 @@ void get_seed(uint64_t *seed) {
 
 Tile *create_random_tile() {
     int element_index = rand() % ELEMENT_ID_COUNT;
-    Element *element = ELEMENT_REGISTRY + element_index;
+    const Element *element = ELEMENT_REGISTRY + element_index;
 
     Mass mass = {element->defaultMass.value, element->defaultMass.unit};
     Temperature temperature = {20.0, TEMPERATURE_C};
@@ -61,7 +61,7 @@ static void set_border_tile(Map *map, int x, int y) {
         free(old);
     }
 
-    Element *e = &ELEMENT_REGISTRY[ELEMENT_UNOBTANIUM];
+    const Element *e = &ELEMENT_REGISTRY[ELEMENT_UNOBTANIUM];
     map->grid[y][x] = create_tile_from_element(e, e->defaultMass, e->defaultTemperature);
 }
 

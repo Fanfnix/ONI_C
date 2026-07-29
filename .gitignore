@@ -4,6 +4,8 @@
 *.py
 *.webp
 
+data/tex/*
+
 *.o
 *.d
 oni

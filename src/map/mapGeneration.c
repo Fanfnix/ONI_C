@@ -32,7 +32,8 @@ Tile *create_random_tile() {
 
 
 Tile *generate_tile(Map *map, MapGenerator map_generator, int x, int y) {
-    return create_random_tile();
+    BiomeType biome = biome_get_at(x, y);
+    return biome_generate_tile(biome);
 }
 
 /* === BORDURE D'UNOBTANIUM === */

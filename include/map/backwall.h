@@ -2,6 +2,7 @@
 #define BACKWALL
 
 typedef enum {
+    BACKWALL_BASE,
     BACKWALL_VOID,
     BACKWALL_ID_COUNT
 } BackWallId;

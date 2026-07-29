@@ -1,6 +1,7 @@
 #include "header.h"
 
 static const char *BACKWALL_NAMES[BACKWALL_ID_COUNT] = {
+    [BACKWALL_BASE] = "base",
     [BACKWALL_VOID] = "void",
 };
 

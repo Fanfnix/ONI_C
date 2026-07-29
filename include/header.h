@@ -23,6 +23,7 @@
 #include "item.h"
 
 #include "map/tile.h"
+#include "map/biome.h"
 #include "map/backwall.h"
 #include "map/mapGeneration.h"
 #include "map/map.h"

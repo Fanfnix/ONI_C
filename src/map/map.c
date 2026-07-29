@@ -19,13 +19,11 @@ void map_init(Map *map) {
         get_seed(seed);
         map->generator = (MapGenerator){seed};
     }
-    Element *e = &ELEMENT_REGISTRY[ELEMENT_VOID];
-    Mass m = e->defaultMass;
-    Temperature t = e->defaultTemperature;
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
-            map->grid[y][x] = create_tile_from_element(e, m, t);
-            map->backwall[y][x] = create_backwall_tile(BACKWALL_VOID);
+            map->grid[y][x] = generate_tile(map, map->generator, x, y);
+            if (y <= 32) map->backwall[y][x] = create_backwall_tile(BACKWALL_VOID);
+            else map->backwall[y][x] = create_backwall_tile(BACKWALL_BASE);
         }
     }
 

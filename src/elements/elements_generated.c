@@ -1,7 +1,7 @@
 /* Fichier généré automatiquement par generate_elements.py */
 /* Ne pas éditer à la main : modifier les .json puis régénérer. */
 #include "header.h"
-#include "elements_generated.h"
+#include "elements/elements_generated.h"
 
 const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     [ELEMENT_AEROGEL] = {

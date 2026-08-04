@@ -6,6 +6,7 @@
 #define TRANSPARENT_COLOR {255, 0, 255, 255}
 
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
@@ -21,6 +22,8 @@
 #include "elements/elements_generated.h"
 
 #include "item.h"
+
+#include "map/noise.h"
 
 #include "map/tile.h"
 #include "map/biome.h"

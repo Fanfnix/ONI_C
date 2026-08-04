@@ -3,7 +3,7 @@
 #ifndef ELEMENTS_GENERATED
 #define ELEMENTS_GENERATED
 
-enum ElementId {
+typedef enum {
     ELEMENT_AEROGEL,
     ELEMENT_ALGAE,
     ELEMENT_ALUMINUM,
@@ -150,9 +150,7 @@ enum ElementId {
     ELEMENT_VOID,
     ELEMENT_COMPOSITION,
     ELEMENT_ID_COUNT
-};
-
-typedef enum ElementId ElementId;
+} ElementId;
 
 extern const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT];
 

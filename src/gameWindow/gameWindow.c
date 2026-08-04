@@ -51,7 +51,7 @@ GameWindow *create_game_window() {
     game_window->pending_restore = 0;
     game_window->cameraX = 0;
     game_window->cameraY = 0;
-    game_window->zoom = 1.0f;
+    game_window->zoom = 0.5f;
 
     return game_window;
 }

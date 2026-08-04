@@ -12,6 +12,11 @@
 #define GAME_WINDOW_FLAGS (SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE)
 #define GAME_WINDOW_NAME "Oxygen Not Included"
 
+#define ZOOM_MIN 0.05f
+#define ZOOM_MAX 2.0f
+#define ZOOM_WHEEL_STEP 0.1f
+#define ZOOM_KEY_SPEED 0.02f
+
 struct GameWindow {
     int posX, posY;
     int width, height;

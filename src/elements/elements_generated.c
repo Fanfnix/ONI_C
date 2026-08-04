@@ -1,7 +1,7 @@
 /* Fichier généré automatiquement par generate_elements.py */
 /* Ne pas éditer à la main : modifier les .json puis régénérer. */
 #include "header.h"
-#include "./elements/elements_generated.h"
+#include "elements_generated.h"
 
 const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     [ELEMENT_AEROGEL] = {
@@ -1514,6 +1514,48 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
         .tagCount = 2,
         .isDisabled = false,
         .localizationID = "STRINGS.ELEMENTS.IRONORE.NAME",
+        .dlcId = "",
+    },
+    [ELEMENT_KATAIRITE] = {
+        .elementId = "Katairite",
+        .color = { 35, 30, 40, 255 },
+        .state = SOLID,
+        .specificHeatCapacity = 4.0f,
+        .thermalConductivity = 1e-05f,
+        .solidSurfaceAreaMultiplier = 1.0f,
+        .liquidSurfaceAreaMultiplier = 1.0f,
+        .gasSurfaceAreaMultiplier = 1.0f,
+        .defaultTemperature = { .value = 300.0f, .unit = TEMPERATURE_K },
+        .defaultMass = { .value = 500.0f, .unit = MASS_KG },
+        .lowTemp = { .value = 0.0f, .unit = TEMPERATURE_K },
+        .highTemp = { .value = 3695.0f, .unit = TEMPERATURE_K },
+        .lowTempTransitionTarget = NULL,
+        .highTempTransitionTarget = "MoltenTungsten",
+        .lowTempTransitionOreId = NULL,
+        .lowTempTransitionOreMassConversion = { .value = 0.0f, .unit = MASS_G },
+        .highTempTransitionOreId = NULL,
+        .highTempTransitionOreMassConversion = { .value = 0.0f, .unit = MASS_G },
+        .molarMass = 341.76f,
+        .toxicity = 0.0f,
+        .lightAbsorptionFactor = 1.0f,
+        .radiationAbsorptionFactor = 0.9f,
+        .radiationPer1000Mass = 0.0f,
+        .solid = {
+            .strength = 2.0f,
+            .hardness = 150.0f,
+            .buildMenuSort = 100,
+            .refinedMetalTarget = NULL,
+        },
+        .sublimateId = NULL,
+        .sublimateFx = NULL,
+        .sublimateEfficiency = 0.0f,
+        .sublimateProbability = 0.0f,
+        .offGasPercentage = 0.0f,
+        .materialCategory = "Other",
+        .tags = { 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+        .tagCount = 0,
+        .isDisabled = false,
+        .localizationID = "STRINGS.ELEMENTS.KATAIRITE.NAME",
         .dlcId = "",
     },
     [ELEMENT_LEAD] = {
@@ -5911,7 +5953,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_VACUUM] = {
         .elementId = "Vacuum",
-        .color = TRANSPARENT_COLOR,
+        .color = { 0, 0, 0, 0 },
         .state = VACUUM,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,
@@ -5947,7 +5989,7 @@ const Element ELEMENT_REGISTRY[ELEMENT_ID_COUNT] = {
     },
     [ELEMENT_VOID] = {
         .elementId = "Void",
-        .color = TRANSPARENT_COLOR,
+        .color = { 0, 0, 0, 0 },
         .state = VACUUM,
         .specificHeatCapacity = 0.0f,
         .thermalConductivity = 0.0f,

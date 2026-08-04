@@ -18,15 +18,24 @@ void map_init(Map *map) {
         *seed = (uint64_t)time(NULL);
         get_seed(seed);
         map->generator = (MapGenerator){seed};
+        biome_init(*seed);
     }
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
             map->grid[y][x] = generate_tile(map, map->generator, x, y);
-            if (y <= 32) map->backwall[y][x] = create_backwall_tile(BACKWALL_VOID);
-            else map->backwall[y][x] = create_backwall_tile(BACKWALL_BASE);
+
+            /* Le mur de fond suit le biome : vide spatial (bande Space
+             * entière, y compris sa sous-zone de vide pur -> cf
+             * biome_is_pure_void) au dessus de la surface, roche pleine
+             * partout ailleurs. */
+            BiomeType biome = biome_get_at(x, y);
+            int isVoid = (biome == BIOME_SPACE) || biome_is_pure_void(x, y);
+            BackWallId backwallId = isVoid ? BACKWALL_VOID : BACKWALL_BASE;
+            map->backwall[y][x] = create_backwall_tile(backwallId);
         }
     }
 
+    generate_caves(map);
     generate_unobtanium_border(map);
 }
 

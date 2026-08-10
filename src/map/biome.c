@@ -117,6 +117,34 @@ static const BiomeZone FIXED_BAND_ZONES[] = {
 #define MIN_BLOCK_SIZE_TILES 150
 #define MERGE_ITERATIONS     8
 
+/* ===================================================================
+ * BORDURES ENTRE BIOMES
+ *
+ * Après calcul du biome de chaque tuile (bandes fixes + zone organique +
+ * fusion des petits amas), on repère les tuiles proches d'une frontière
+ * entre deux biomes différents et on leur substitue un matériau de
+ * bordure au lieu du matériau normal du biome :
+ *   - bordure impliquant SANDSTONE -> 70% Granite / 30% Sedimentary Rock
+ *   - toute autre bordure          -> 100% Katairite
+ *
+ * Implémenté comme un flood fill multi-sources (BFS) à partir des tuiles
+ * directement adjacentes à un changement de biome, propagé sur
+ * BORDER_RADIUS_TILES tuiles de chaque côté de la frontière. Les
+ * bordures Sandstone sont calculées en premier et sont prioritaires sur
+ * les bordures génériques en cas de chevauchement (coin à 3 biomes).
+ *
+ * Il n'y a jamais de bordure entre la sous-zone de vide pur et le reste
+ * de Space : ce sont deux sous-zones du MÊME BiomeType (BIOME_SPACE),
+ * donc elles ne déclenchent jamais la détection de frontière ci-dessous
+ * (qui ne se déclenche qu'entre deux BiomeType différents).
+ * =================================================================== */
+
+/* Rayon de chaque côté de la frontière, en tuiles -> épaisseur totale
+ * visée = 2 * BORDER_RADIUS_TILES (donc ~4 tuiles avec cette valeur).
+ * Minimum acceptable = 1 (soit 2 tuiles d'épaisseur totale). Monte à 2 ou
+ * 3 pour viser plutôt 4-6 tuiles au total. */
+#define BORDER_RADIUS_TILES 2
+
 
 typedef struct {
     float x, y;       /* coordonnées tuile (pas normalisées) */
@@ -131,6 +159,14 @@ static NoiseGenerator bandWarpNoise; /* bruit d'ondulation des bandes fixes (Spa
 
 static BiomeType biomeGrid[MAP_HEIGHT][MAP_WIDTH];
 static int biomeGridReady = 0;
+
+typedef enum {
+    TILE_BORDER_NONE,
+    TILE_BORDER_SANDSTONE, /* 70% Granite / 30% Sedimentary Rock */
+    TILE_BORDER_GENERIC,   /* 100% Katairite */
+} TileBorderType;
+
+static TileBorderType borderGrid[MAP_HEIGHT][MAP_WIDTH];
 
 static const int NEIGHBOR_DX[4] = { 1, -1,  0,  0 };
 static const int NEIGHBOR_DY[4] = { 0,  0,  1, -1 };
@@ -366,6 +402,119 @@ static void merge_small_blocks(void) {
 
 
 /* ===================================================================
+ * BORDURES ENTRE BIOMES (cf constantes/commentaire en tête de fichier)
+ * =================================================================== */
+
+/* Une passe de flood fill multi-sources : les tuiles adjacentes à un
+ * changement de biome correspondant à `wantSandstonePass` deviennent des
+ * graines à distance 0, propagées sur BORDER_RADIUS_TILES tuiles. `dist`
+ * est partagé entre les deux passes (Sandstone puis générique) : une
+ * tuile déjà revendiquée par la passe Sandstone (dist != -1) n'est plus
+ * candidate pour la passe générique -> Sandstone est prioritaire. */
+static void flood_border_pass(int *dist, int *queue, int wantSandstonePass) {
+    int qHead = 0, qTail = 0;
+
+    for (int y = 0; y < MAP_HEIGHT; y++) {
+        for (int x = 0; x < MAP_WIDTH; x++) {
+            int idx = y * MAP_WIDTH + x;
+            if (dist[idx] != -1) continue; /* deja pris par une passe precedente */
+
+            BiomeType b = biomeGrid[y][x];
+            int isSeed = 0;
+
+            for (int d = 0; d < 4; d++) {
+                int nx = x + NEIGHBOR_DX[d];
+                int ny = y + NEIGHBOR_DY[d];
+                if (nx < 0 || nx >= MAP_WIDTH || ny < 0 || ny >= MAP_HEIGHT) continue;
+
+                BiomeType nb = biomeGrid[ny][nx];
+                if (nb == b) continue; /* meme biome (ex: vide/debris de Space) -> pas de frontiere */
+
+                int pairHasSandstone = (b == BIOME_SANDSTONE || nb == BIOME_SANDSTONE);
+                if (pairHasSandstone == wantSandstonePass) {
+                    isSeed = 1;
+                    break;
+                }
+            }
+
+            if (isSeed) {
+                dist[idx] = 0;
+                borderGrid[y][x] = wantSandstonePass ? TILE_BORDER_SANDSTONE : TILE_BORDER_GENERIC;
+                queue[qTail++] = idx;
+            }
+        }
+    }
+
+    while (qHead < qTail) {
+        int cur = queue[qHead++];
+        if (dist[cur] >= BORDER_RADIUS_TILES) continue;
+
+        int cx = cur % MAP_WIDTH;
+        int cy = cur / MAP_WIDTH;
+
+        for (int d = 0; d < 4; d++) {
+            int nx = cx + NEIGHBOR_DX[d];
+            int ny = cy + NEIGHBOR_DY[d];
+            if (nx < 0 || nx >= MAP_WIDTH || ny < 0 || ny >= MAP_HEIGHT) continue;
+
+            int nidx = ny * MAP_WIDTH + nx;
+            if (dist[nidx] != -1) continue;
+
+            dist[nidx] = dist[cur] + 1;
+            borderGrid[ny][nx] = borderGrid[cy][cx];
+            queue[qTail++] = nidx;
+        }
+    }
+}
+
+
+static void compute_border_grid(void) {
+    size_t totalTiles = (size_t)MAP_WIDTH * (size_t)MAP_HEIGHT;
+
+    int *dist = (int *)malloc(totalTiles * sizeof(int));
+    int *queue = (int *)malloc(totalTiles * sizeof(int));
+    if (dist == NULL || queue == NULL) {
+        free(dist);
+        free(queue);
+        return;
+    }
+
+    for (size_t i = 0; i < totalTiles; i++) dist[i] = -1;
+    for (int y = 0; y < MAP_HEIGHT; y++) {
+        for (int x = 0; x < MAP_WIDTH; x++) {
+            borderGrid[y][x] = TILE_BORDER_NONE;
+        }
+    }
+
+    flood_border_pass(dist, queue, 1 /* bordures Sandstone en premier -> prioritaires */);
+    flood_border_pass(dist, queue, 0 /* le reste -> Katairite */);
+
+    free(dist);
+    free(queue);
+}
+
+
+/* Plage de température "ambiante" d'un biome : englobe les tempMinC/tempMaxC
+ * de tous ses matériaux. Utilisé pour donner une température plausible aux
+ * tuiles de bordure (qui n'ont pas leur propre plage définie), en gardant
+ * une cohérence thermique avec l'endroit où elles se trouvent (froid près
+ * de Tundra, chaud près de Magma, etc). */
+static void biome_get_temp_range(BiomeType type, float *outMin, float *outMax) {
+    const BiomeDefinition *def = biome_get_definition(type);
+    float mn = def->materials[0].tempMinC;
+    float mx = def->materials[0].tempMaxC;
+
+    for (int i = 1; i < def->materialCount; i++) {
+        if (def->materials[i].tempMinC < mn) mn = def->materials[i].tempMinC;
+        if (def->materials[i].tempMaxC > mx) mx = def->materials[i].tempMaxC;
+    }
+
+    *outMin = mn;
+    *outMax = mx;
+}
+
+
+/* ===================================================================
  * API PUBLIQUE
  * =================================================================== */
 
@@ -422,6 +571,7 @@ void biome_init(uint64_t seed) {
     }
 
     merge_small_blocks();
+    compute_border_grid();
     biomeGridReady = 1;
 }
 
@@ -588,19 +738,35 @@ Tile *biome_generate_tile(BiomeType biome, int x, int y) {
         return NULL;
     }
 
-    const BiomeDefinition *def = biome_get_definition(biome);
-    const BiomeMaterial *mat = pick_random_material(def);
+    ElementId elementId;
+    float tempMinC, tempMaxC;
 
-    float tempC = mat->tempMinC;
-    if (mat->tempMaxC > mat->tempMinC) {
-        tempC += ((float)rand() / (float)RAND_MAX) * (mat->tempMaxC - mat->tempMinC);
+    TileBorderType border = borderGrid[y][x];
+    if (border == TILE_BORDER_SANDSTONE) {
+        /* 70% Granite / 30% Sedimentary Rock */
+        elementId = (((float)rand() / (float)RAND_MAX) < 0.70f) ? ELEMENT_GRANITE : ELEMENT_SEDIMENTARYROCK;
+        biome_get_temp_range(biome, &tempMinC, &tempMaxC);
+    } else if (border == TILE_BORDER_GENERIC) {
+        elementId = ELEMENT_KATAIRITE;
+        biome_get_temp_range(biome, &tempMinC, &tempMaxC);
+    } else {
+        const BiomeDefinition *def = biome_get_definition(biome);
+        const BiomeMaterial *mat = pick_random_material(def);
+        elementId = mat->element;
+        tempMinC = mat->tempMinC;
+        tempMaxC = mat->tempMaxC;
+    }
+
+    float tempC = tempMinC;
+    if (tempMaxC > tempMinC) {
+        tempC += ((float)rand() / (float)RAND_MAX) * (tempMaxC - tempMinC);
     }
     Temperature temperature = { .value = tempC, .unit = TEMPERATURE_C };
 
-    const Element *element = &ELEMENT_REGISTRY[mat->element];
+    const Element *element = &ELEMENT_REGISTRY[elementId];
     float massFactor = 0.8f + ((float)rand() / (float)RAND_MAX) * 0.4f; /* 80%-120% */
     Mass mass = element->defaultMass;
     mass.value *= massFactor;
 
-    return create_tile_from_element_id(mat->element, mass, temperature);
+    return create_tile_from_element_id(elementId, mass, temperature);
 }
